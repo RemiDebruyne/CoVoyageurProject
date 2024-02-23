@@ -42,5 +42,6 @@ namespace CoVoyageurCore.Models
         //[RegularExpression(@"[FMN]", ErrorMessage = "Gender must be either F, M, or N.")]
         //[StringLength(1)]
         public string? Gender { get; set; }
+        public bool IsAdmin { get; set; } = false;
     }
 }
