@@ -7,11 +7,34 @@
     <title>CoVoyageurView</title>
     <base href="/" />
     <link href="css/app.css" rel="stylesheet" />
-    <link href="css/tailwind.debug.css" rel="stylesheet" />
+    <!--<link href="css/tailwind.debug.css" rel="stylesheet" />-->
     <link href="CoVoyageurView.styles.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': {
+                            50: '#e9faf5',
+                            100: '#baefde',
+                            200: '#98e8cf',
+                            300: '#6addb9',
+                            400: '#4dd6ab',
+                            500: '#20cc96',
+                            600: '#1dba89',
+                            700: '#17916b',
+                            800: '#127053',
+                            900: '#0d563f',
+                        }
+
+                    }
+                }
+        }
+    </script>
 </head>
  
 <body>
