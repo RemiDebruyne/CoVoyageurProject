@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "scripts": {
+    "buildcss:debug": "cross-env TAILWIND_MODE=build postcss ./Styles/tailwind.css -o ./wwwroot/css/tailwind.debug.css",
+    "buildcss:release": "cross-env NODE_ENV=production postcss ./Styles/tailwind.css -o ./wwwroot/css/tailwind.release.css"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "cross-env": "^7.0.3",
+    "postcss": "^8.4.35",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.1"
+  }
+}
