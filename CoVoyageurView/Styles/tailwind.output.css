@@ -568,10 +568,6 @@ video {
   justify-content: space-between;
 }
 
-.justify-around {
-  justify-content: space-around;
-}
-
 .text-nowrap {
   text-wrap: nowrap;
 }
