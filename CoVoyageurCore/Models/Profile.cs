@@ -16,9 +16,6 @@ namespace CoVoyageurCore.Models
         //[Column("id")]
         public int Id { get; set; }
 
-        //[Column("email")]
-        //[Required]
-        public string? Email { get; set; }
 
         //[Column("rating")]
         //[Required]
@@ -31,7 +28,7 @@ namespace CoVoyageurCore.Models
         public int UserId { get; set; }
         public User User { get; set; }
 
-        public List<Car> Cars { get; set; }
+        public List<Car>? Cars { get; set; }
 
         public Preference? Preferences { get; set; }
 
