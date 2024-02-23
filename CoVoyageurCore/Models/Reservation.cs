@@ -9,7 +9,7 @@ namespace CoVoyageurCore.Models
 {
     public class Reservation
     {
-        public int ReservationId { get; set; }
+        public int Id { get; set; }
         public int UserId { get; set; }
         public User User { get; set; } 
         public int RideId { get; set; }
