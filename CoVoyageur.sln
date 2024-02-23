@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoVoyageurView", "CoVoyageu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoVoyageurCore", "CoVoyageurCore\CoVoyageurCore.csproj", "{5E910DBC-A3A9-4EDC-AEA1-BF99A3583AEB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoVoyageurAPI", "CoVoyageurAPI\CoVoyageurAPI.csproj", "{62F33EF5-0027-475F-B811-031442A8C1B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5E910DBC-A3A9-4EDC-AEA1-BF99A3583AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E910DBC-A3A9-4EDC-AEA1-BF99A3583AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E910DBC-A3A9-4EDC-AEA1-BF99A3583AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62F33EF5-0027-475F-B811-031442A8C1B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62F33EF5-0027-475F-B811-031442A8C1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62F33EF5-0027-475F-B811-031442A8C1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62F33EF5-0027-475F-B811-031442A8C1B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
