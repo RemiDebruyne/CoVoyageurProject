@@ -14,7 +14,6 @@ namespace CoVoyageurCore.Models
         public DateTime RideDate { get; set; }
         public decimal Price { get; set; }
         public int AvailableSeats { get; set; }
-        public List<User>? UserList { get; set; }
         public int UserId { get; set; } 
         public User User { get; set; }
     }
