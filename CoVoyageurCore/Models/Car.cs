@@ -41,7 +41,8 @@ namespace CoVoyageurCore.Models
             Green,
             Blue,
             Yellow,
-            Pink
+            Pink,
+            Purple
         }
 
     }
