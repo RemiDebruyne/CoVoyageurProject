@@ -16,5 +16,7 @@ namespace CoVoyageurCore.Models
         public int AvailableSeats { get; set; }
         public int UserId { get; set; } 
         public User User { get; set; }
+        public string Departure { get; set; }
+        public string  Arrival { get; set; }
     }
 }
