@@ -24,7 +24,8 @@
         <div class="flex items-center">
             <label for="date">
                 <i class="fa-solid fa-calendar-days fa-lg" style="color: #a5a5a5;"></i>
-                <InputDate id="date" @bind-Value="Ride.RideDate"/>
+                <InputDate id="date" onfocus="(this.type='date')"
+        onblur="(this.type='text')" placeholder="Today" min="@DateTime.Now" @bind-Value="Ride.RideDate"/>
             </label>
         </div>
 
@@ -41,5 +42,13 @@
 </div>
 
 @code {
-    public Ride? Ride { get; set; } = new Ride();
+
+    public Ride? Ride { get; set; } = new Ride()
+    {
+        RideDate = DateTime.Now
+    };
+
+    public DateTime Date { get; set; }
+
+
 }

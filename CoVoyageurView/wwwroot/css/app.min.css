@@ -1126,6 +1126,10 @@ input:checked + .toggle-bg {
   z-index: -1;
 }
 
+.z-\[1\] {
+  z-index: 1;
+}
+
 .mx-10 {
   margin-left: 2.5rem;
   margin-right: 2.5rem;
@@ -1204,16 +1208,36 @@ input:checked + .toggle-bg {
   height: 50px;
 }
 
-.h-full {
-  height: 100%;
+.max-h-\[250px\] {
+  max-height: 250px;
 }
 
-.min-h-\[300px\] {
-  min-height: 300px;
+.max-h-\[275px\] {
+  max-height: 275px;
+}
+
+.max-h-\[25\E0px\] {
+  max-height: 25àpx;
+}
+
+.max-h-\[25px\] {
+  max-height: 25px;
+}
+
+.max-h-\[260px\] {
+  max-height: 260px;
 }
 
 .min-h-80 {
   min-height: 20rem;
+}
+
+.min-h-\[300\] {
+  min-height: 300;
+}
+
+.min-h-\[300px\] {
+  min-height: 300px;
 }
 
 .w-1\/2 {
@@ -1230,6 +1254,10 @@ input:checked + .toggle-bg {
 
 .w-\[66\%\] {
   width: 66%;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .flex-1 {
@@ -1483,11 +1511,6 @@ input:checked + .toggle-bg {
   background-color: rgb(255 255 255 / 0.5);
 }
 
-.bg-primary-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(32 204 150 / var(--tw-bg-opacity));
-}
-
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -1544,6 +1567,11 @@ input:checked + .toggle-bg {
   padding-bottom: 0.75rem;
 }
 
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .ps-3 {
   padding-inline-start: 0.75rem;
 }
@@ -1564,6 +1592,21 @@ input:checked + .toggle-bg {
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-9xl {
+  font-size: 8rem;
+  line-height: 1;
+}
+
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
+}
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .font-bold {
