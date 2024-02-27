@@ -1,29 +1,30 @@
-﻿<div class="flex w-[66%] m-auto border-neutral-100 border-2 rounded-2xl shadow-lg shadow-neutral-100 ">
-    <EditForm Model="Ride" class="p-2 flex font-bold divide-x-[1px] divide-gray-300">
+﻿<div class="flex w-[66%] bg-white  border-neutral-100 border-2 rounded-2xl shadow-lg shadow-neutral-100 ">
+    <EditForm Model="Ride" class="p-1 flex font-medium divide-x-[1px] divide-gray-300">
         <!-- Départ -->
         <div class="flex items-center">
-            <label>
+            <label for="departure">
                 <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="16.5" cy="16.5" r="7" fill="white" stroke="#A5A5A5" stroke-width="4" />
                 </svg>
             </label>
-            <InputText placeholder="Leaving from..." @bind-Value="Ride.Departure" />
+            <InputText id="departure" placeholder="Leaving from..." @bind-Value="Ride.Departure" />
         </div>
 
         <!-- Destination -->
         <div class="flex items-center">
-                <label>
+                <label for="arrival">
                     <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="16.5" cy="16.5" r="7" fill="white" stroke="#A5A5A5" stroke-width="4" />
                     </svg>
                 </label>
-                <InputText placeholder="Going To..." @bind-Value="Ride.Arrival" />
+                <InputText id="arrival" placeholder="Going To..." @bind-Value="Ride.Arrival" />
         </div>
 
         <!-- Date -->
         <div class="flex items-center">
-            <label>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z" /></svg>
+            <label for="date">
+                <i class="fa-solid fa-calendar-days fa-lg" style="color: #a5a5a5;"></i>
+                <InputDate id="date" @bind-Value="Ride.RideDate"/>
             </label>
         </div>
 
