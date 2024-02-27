@@ -1,12 +1,23 @@
-﻿@using CoVoyageurView.Pages
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime Js
 
 <div class="page">
-
-
-
     <main>
-        <NavBar />
-        <Index />
+        <header>
+            <NavBar />
+        </header>
+        <article class="content px-4">
+            @Body
+        </article>
     </main>
 </div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool isFirstRender)
+    {
+        if (isFirstRender)
+        {
+            await Js.InvokeVoidAsync("window.initializeFlowbite");
+        }
+    }
+}
