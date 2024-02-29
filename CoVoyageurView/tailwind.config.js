@@ -3,7 +3,7 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
     mode: 'jit',
-    content: ["./**/*.{razor,html,cshtml}", "./node_modules/flowbite/**/*.js"],
+    content: ["./**/*.{razor,html,cshtml}"],
     theme: {
         colors: {
             'primary': {
@@ -20,5 +20,5 @@ module.exports = {
             },
         },
     },
-    plugins: [require('flowbite/plugin')],
+    plugins: [],
 }

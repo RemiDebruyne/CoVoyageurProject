@@ -1,9 +1,13 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime Js
 
-        <header class="px-6">
-            <NavBar />
-        </header>
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<header class="px-6">
+    <NavBar />
+</header>
 <div class="page">
     <main>
         <article class="content">
@@ -13,11 +17,5 @@
 </div>
 
 @code {
-    protected override async Task OnAfterRenderAsync(bool isFirstRender)
-    {
-        if (isFirstRender)
-        {
-            await Js.InvokeVoidAsync("window.initializeFlowbite");
-        }
-    }
+
 }

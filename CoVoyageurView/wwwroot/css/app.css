@@ -11,6 +11,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/*input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input {
+    border: 0;
+    outline: 0;
+}
+
+    input:focus {
+        outline: none !important;
+    }
+*/
+
 *,
 ::before,
 ::after {
