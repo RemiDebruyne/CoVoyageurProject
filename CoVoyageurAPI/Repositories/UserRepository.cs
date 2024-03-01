@@ -57,6 +57,8 @@ namespace CoVoyageurAPI.Repositories
                 userFromDb.LastName = user.LastName;
             if (userFromDb.Email != user.Email)
                 userFromDb.Email = user.Email;
+            if (userFromDb.Phone != user.Phone)
+                userFromDb.Phone = user.Phone;
             if (userFromDb.BirthDate != user.BirthDate)
                 userFromDb.BirthDate = user.BirthDate;
             if (userFromDb.Password != user.Password)

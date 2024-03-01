@@ -28,6 +28,10 @@ namespace CoVoyageurCore.Models
         //[Required]
         public string? Email { get; set; }
 
+        //[Column("phone")]
+        //[Required]
+        public string? Phone { get; set; }
+
         //[Column("password")]
         //[Required]
         public string? Password { get; set; }

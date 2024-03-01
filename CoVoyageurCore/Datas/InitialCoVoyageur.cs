@@ -6,10 +6,10 @@ namespace CoVoyageurCore.Datas
     {
         public static readonly List<User> users = new List<User>()
         {
-            new User{ Id = 1, FirstName ="Kevin", LastName = "Callet", Email = "kevin@mail.com", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
-            new User{ Id = 2, FirstName ="Massima", LastName = "Mao", Email = "massimo@mail.com", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
-            new User{ Id = 3, FirstName ="Rémi", LastName = "Debruyne", Email = "remi@mail.com", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
-            new User{ Id = 4, FirstName ="Aguit", LastName = "Inan", Email = "aguit@mail.com", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
+            new User{ Id = 1, FirstName ="Kevin", LastName = "Callet", Email = "kevin@mail.com", Phone="0102030405", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
+            new User{ Id = 2, FirstName ="Massima", LastName = "Mao", Email = "massimo@mail.com", Phone="0102030405", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
+            new User{ Id = 3, FirstName ="Rémi", LastName = "Debruyne", Email = "remi@mail.com", Phone="0102030405", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
+            new User{ Id = 4, FirstName ="Aguit", LastName = "Inan", Email = "aguit@mail.com", Phone="0102030405", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
         };
 
         public static readonly List<Profile> profiles = new List<Profile>()
