@@ -18,6 +18,10 @@
 	  <ProjectReference Include="..\CoVoyageurCore\CoVoyageurCore.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\CoVoyageurCore\CoVoyageurCore.csproj" />
+	</ItemGroup>
+
 
 
 </Project>

@@ -1,0 +1,56 @@
+﻿<EditForm Model="Ride" class="flex w-[66%] bg-white  border-neutral-100 border-2 rounded-2xl shadow-lg shadow-neutral-100   font-medium divide-x-[1px] divide-gray-300">
+
+    <!-- Départ -->
+    <div class="flex items-center">
+        <label for="departure">
+            <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16.5" cy="16.5" r="7" fill="white" stroke="#A5A5A5" stroke-width="4" />
+            </svg>
+        </label>
+        <InputText id="departure" placeholder="Leaving from..." @bind-Value="Ride.Departure" />
+    </div>
+
+    <!-- Destination -->
+    <div class="flex items-center">
+        <label for="arrival">
+            <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16.5" cy="16.5" r="7" fill="white" stroke="#A5A5A5" stroke-width="4" />
+            </svg>
+        </label>
+        <InputText class="border-none" id="arrival" placeholder="Going To..." @bind-Value="Ride.Arrival" />
+    </div>
+
+    <!-- Date -->
+    @* <MudDatePicker Label="Only Calendar" @bind-Date="date" DisableToolbar="true" /> *@
+
+    <div class="flex items-center">
+        <label for="date">
+            @* <i class="fa-solid fa-calendar-days fa-lg" style="color: #a5a5a5;"></i> *@
+            <InputDate id="date" placeholder="Today" @bind-Value="Ride.RideDate" />
+        </label>
+    </div>
+
+    <!-- Passager -->
+    <div class="flex items-center">
+        @* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#a5a5a5" d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" /></svg> *@
+        <i class="fa-solid fa-user" style="color: #a5a5a5;"></i>
+        <InputNumber id="passenger" @bind-Value="Ride.AvailableSeats" />
+    </div>
+
+    <!-- Bouton -->
+    <div class="bg-primary-500">
+        <button type="submit" class="">Search</button>
+    </div>
+
+</EditForm>
+
+@code {
+
+
+    public Ride? Ride { get; set; } = new Ride()
+        {
+            RideDate = DateTime.Now
+        };
+
+    DateTime? date = DateTime.Today;
+}

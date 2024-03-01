@@ -5,10 +5,7 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoVoyageurCore", "CoVoyageurCore\CoVoyageurCore.csproj", "{50DD9D2A-A25D-4851-9845-467CE161522B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoVoyageurAPI", "CoVoyageurAPI\CoVoyageurAPI.csproj", "{9C66038A-83C7-48F8-8CCD-A27AFC3902A5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoVoyageurView", "CoVoyageurView\CoVoyageurView.csproj", "{D10694E2-9B45-451A-902D-8D753BB76DFF}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +16,7 @@ Global
 		{50DD9D2A-A25D-4851-9845-467CE161522B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50DD9D2A-A25D-4851-9845-467CE161522B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50DD9D2A-A25D-4851-9845-467CE161522B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C66038A-83C7-48F8-8CCD-A27AFC3902A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C66038A-83C7-48F8-8CCD-A27AFC3902A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C66038A-83C7-48F8-8CCD-A27AFC3902A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C66038A-83C7-48F8-8CCD-A27AFC3902A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D10694E2-9B45-451A-902D-8D753BB76DFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D10694E2-9B45-451A-902D-8D753BB76DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D10694E2-9B45-451A-902D-8D753BB76DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D10694E2-9B45-451A-902D-8D753BB76DFF}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
