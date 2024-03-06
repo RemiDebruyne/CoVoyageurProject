@@ -9,12 +9,13 @@ Gender
 Phone
 *@
 @*  h-[calc(100svh-50px)] *@
-<div class="container flex h-screen">
-    <div class=" w-[40%] bg-[url(/images/pink-stairs.jpg)] bg-cover bg-center">
+@* bg-[url(/images/pink-stairs.jpg)] bg-cover bg-center *@
+<div class="flex w-11/12 h-4/5">
+    <div class="w-[250px] bg-primary-500 h-full">
     </div>
-    <div class="w-[60%]">
+    <div class="flex flex-col w-[60%]">
         <h1 class="text-center text-4xl text-primary-500 font-bold">Welcome aboard !</h1>
-            <EditForm Model="User" class="grid grid-cols-2 grid-rows-9 w-[60%]">
+            <EditForm Model="User" class="self-center grid grid-cols-2 grid-rows-9 gap-4 w-[45%]">
                 <div>
                     <label for="firstname">Firstname</label>
                     <InputText id="firstname" @bind-Value="User.FirstName" class="input-register"></InputText>
