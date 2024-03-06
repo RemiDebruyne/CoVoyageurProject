@@ -1,4 +1,5 @@
 ﻿
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -17,3 +18,13 @@
         right: 0.75rem;
         top: 0.5rem;
     }
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    font-style: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+    shape-margin: 1rem;
+}

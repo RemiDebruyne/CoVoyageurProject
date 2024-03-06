@@ -1,4 +1,5 @@
 ﻿@page "/register"
+@layout NoMenuLayout
 @* FirstName
 LastName
 Email
@@ -7,16 +8,53 @@ BirthDate
 Gender
 Phone
 *@
+@*  h-[calc(100svh-50px)] *@
+<div class="container flex h-screen">
+    <div class=" w-[40%] bg-[url(/images/pink-stairs.jpg)] bg-cover bg-center">
+    </div>
+    <div class="w-[60%]">
+        <h1 class="text-center text-4xl text-primary-500 font-bold">Welcome aboard !</h1>
+            <EditForm Model="User" class="grid grid-cols-2 grid-rows-9 w-[60%]">
+                <div>
+                    <label for="firstname">Firstname</label>
+                    <InputText id="firstname" @bind-Value="User.FirstName" class="input-register"></InputText>
+                </div>
+                <div>
+                    <label for="lastname">Lastname</label>
+                    <InputText id="lastname" @bind-Value="User.LastName" class="input-register"></InputText>
+                </div>
+                <div class="col-span-2">
+                    <label for="email">Email</label> 
+                    <InputText id="email" @bind-Value="User.Email" class="input-register"></InputText>
+                </div>
+                <div class="col-span-2">
+                    <label for="password">Password</label>
+                    <InputText id="password" @bind-Value="User.Password" class="input-register"></InputText>
+                </div>
+                <div class="col-span-2">
+                    <label for="passwordCheck">Password</label>
+                    <InputText id="passwordCheck" @bind-Value="User.Password" class="input-register"></InputText>
+                </div>
+                <div>
+                    <label for="birthdate">Birthdate</label>
+                    <InputDate id="birthdate" @bind-Value="User.BirthDate" class="input-register"></InputDate>
+                </div>
 
-
-<div class="grid grid-cols-2 grid-rows-1 gap-0 h-full bg-red-500">
-    <div class="bg-primary-500"></div>
-    <div class="bg-yellow-500"></div>
+                <div>
+                    <label for="gender">Gender</label>
+                    <InputSelect id="gender" @bind-Value="User.Gender" class="input-register">
+                    </InputSelect>
+                </div>
+                <div>
+                    <button type="submit" class="px-4 py-3 bg-primary-500">Sign up</button>
+                </div>
+            </EditForm>
+    </div>
 </div>
 
 
 @code {
 
-    public User user { get; set; } = new();
+    public User User { get; set; } = new();
 
 }
