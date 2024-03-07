@@ -32,7 +32,6 @@ namespace CoVoyageurCore.Models
         [Column("ratingDate")]
         public DateTime RatingDate { get; set; }
 
-
         public Ride Ride { get; set; }      
         public User RatedUser { get; set; }
         public User RatingUser { get; set; }
