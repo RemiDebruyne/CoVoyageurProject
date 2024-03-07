@@ -1,5 +1,7 @@
 ﻿@page "/register"
 @layout NoMenuLayout
+@inject IApiQueryService<User> service;
+@using CoVoyageurView.Services
 @using Helpers;
 @using System.ComponentModel.DataAnnotations
 @* FirstName
@@ -60,6 +62,7 @@ Phone
             </div>
             <div class="col-span-2 text-center">
                 <button type="submit" class="px-12 py-2 mt-4 bg-primary-500 font-bold text-white hover:bg-primary-700">Sign up</button>
+                <p class="text-red-500">@ErrorMessage</p>
             </div>
         </EditForm>
     </div>
@@ -68,12 +71,12 @@ Phone
 
 @code {
 
-
-
     public User User { get; set; } = new()
         {
             BirthDate = DateTime.Today
         };
+
+    public string ErrorMessage { get; set; }
 
 
     [Inject]
@@ -82,17 +85,18 @@ Phone
     public async void HandleSubmit()
     {
 
-        //     var success = await service.Post(entity)
+        var success = await service.Post(User);
 
-        // if (!success)
-        //     {
-        //         ErrorMessage = "Registering went wrong, please try agian";
-        //     }
+        if (!success)
+        {
+            ErrorMessage = "Registering went wrong, please try agian";
+        }
 
-        // if (success)
-        // {
-        //     Navigation.NavigateTo("/");
-        // }
+        if (success)
+        {
+            ErrorMessage = "";
+            Navigation.NavigateTo("/register/profile/{id}");
+        }
     }
 
     #region PasswordValidation
