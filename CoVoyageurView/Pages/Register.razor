@@ -1,5 +1,7 @@
 ﻿@page "/register"
 @layout NoMenuLayout
+@using Helpers;
+@using System.ComponentModel.DataAnnotations
 @* FirstName
 LastName
 Email
@@ -8,54 +10,108 @@ BirthDate
 Gender
 Phone
 *@
-@*  h-[calc(100svh-50px)] *@
-@* bg-[url(/images/pink-stairs.jpg)] bg-cover bg-center *@
-<div class="flex w-11/12 h-4/5">
-    <div class="w-[250px] bg-primary-500 h-full">
+
+
+<div class="flex w-8/12 h-4/5 rounded-2xl bg-white overflow-hidden">
+    <div class="bg-[url('/images/pink-stairs.jpg')] bg-cover bg-center w-[40%]">
     </div>
     <div class="flex flex-col w-[60%]">
-        <h1 class="text-center text-4xl text-primary-500 font-bold">Welcome aboard !</h1>
-            <EditForm Model="User" class="self-center grid grid-cols-2 grid-rows-9 gap-4 w-[45%]">
-                <div>
-                    <label for="firstname">Firstname</label>
-                    <InputText id="firstname" @bind-Value="User.FirstName" class="input-register"></InputText>
-                </div>
-                <div>
-                    <label for="lastname">Lastname</label>
-                    <InputText id="lastname" @bind-Value="User.LastName" class="input-register"></InputText>
-                </div>
-                <div class="col-span-2">
-                    <label for="email">Email</label> 
-                    <InputText id="email" @bind-Value="User.Email" class="input-register"></InputText>
-                </div>
-                <div class="col-span-2">
-                    <label for="password">Password</label>
-                    <InputText id="password" @bind-Value="User.Password" class="input-register"></InputText>
-                </div>
-                <div class="col-span-2">
-                    <label for="passwordCheck">Password</label>
-                    <InputText id="passwordCheck" @bind-Value="User.Password" class="input-register"></InputText>
-                </div>
-                <div>
-                    <label for="birthdate">Birthdate</label>
-                    <InputDate id="birthdate" @bind-Value="User.BirthDate" class="input-register"></InputDate>
-                </div>
+        <h1 class="text-center text-4xl mt-10 mb-8 text-primary-500 font-bold">Welcome aboard !</h1>
+        <EditForm Model="User" OnValidSubmit="@HandleSubmit" class="self-center grid grid-cols-2 grid-rows-[1fr_1fr_1r_1fr_1fr_1fr] gap-x-4 gap-y-2  w-[45%]">
+            <div>
+                <label for="firstname" class="font-semibold text-gray-600">Firstname</label>
+                <InputText id="firstname" @bind-Value="User.FirstName" class="input-register"></InputText>
+            </div>
+            <div>
+                <label for="lastname" class="font-semibold text-gray-600">Lastname</label>
+                <InputText id="lastname" @bind-Value="User.LastName" class="input-register"></InputText>
+            </div>
+            <div class="col-span-2">
+                <label for="email" class="font-semibold text-gray-600">Email</label>
+                <InputText id="email" @bind-Value="User.Email" class="input-register"></InputText>
+            </div>
+            <div class="col-span-2">
+                <label for="password" class="font-semibold text-gray-600">Password</label>
+                <InputText id="password" type="password" @bind-Value="User.Password" class="input-register"></InputText>
 
-                <div>
-                    <label for="gender">Gender</label>
-                    <InputSelect id="gender" @bind-Value="User.Gender" class="input-register">
-                    </InputSelect>
-                </div>
-                <div>
-                    <button type="submit" class="px-4 py-3 bg-primary-500">Sign up</button>
-                </div>
-            </EditForm>
+            </div>
+            <div class="col-span-2">
+                <label for="passwordCheck" class="font-semibold text-gray-600">Verify your password</label>
+                <InputText id="passwordCheck" type="password" @bind-Value="PasswordCheck" @onblur="PasswordValidation" class="input-register group-invalid:"></InputText>
+                @if (!PasswordIsValid)
+                {
+                    <small class="text-red-500">Passwords do not match. Please try again.</small>
+                }
+
+            </div>
+            <div>
+                <label for="birthdate" class="font-semibold text-gray-600">Birthdate</label>
+                <InputDate id="birthdate" @bind-Value="User.BirthDate" class="input-register"></InputDate>
+            </div>
+
+            <div>
+                <label for="gender" class="font-semibold text-gray-600">Gender</label>
+                <InputSelect id="gender" @bind-Value="User.Gender" class="input-register">
+                    Select a gender
+                    <option value="@User.Gender">M</option>
+                    <option value="@User.Gender">F</option>
+                    <option value="@User.Gender">Other</option>
+                </InputSelect>
+            </div>
+            <div class="col-span-2 text-center">
+                <button type="submit" class="px-12 py-2 mt-4 bg-primary-500 font-bold text-white hover:bg-primary-700">Sign up</button>
+            </div>
+        </EditForm>
     </div>
 </div>
 
 
 @code {
 
-    public User User { get; set; } = new();
 
+
+    public User User { get; set; } = new()
+        {
+            BirthDate = DateTime.Today
+        };
+
+
+    [Inject]
+    public NavigationManager Navigation { get; set; }
+
+    public async void HandleSubmit()
+    {
+
+        //     var success = await service.Post(entity)
+
+        // if (!success)
+        //     {
+        //         ErrorMessage = "Registering went wrong, please try agian";
+        //     }
+
+        // if (success)
+        // {
+        //     Navigation.NavigateTo("/");
+        // }
+    }
+
+    #region PasswordValidation
+
+    //TODO trouver un moyen de faire une validation sur l'input pour le passer à invalide
+    public string PasswordCheck { get; set; }
+
+    public bool PasswordIsValid { get; set; } = true;
+
+    public void PasswordValidation()
+    {
+        PasswordIsValid = true;
+        if (User.Password != PasswordCheck)
+        {
+            PasswordCheck = "";
+            PasswordIsValid = false;
+        }
+
+    }
+
+    #endregion
 }

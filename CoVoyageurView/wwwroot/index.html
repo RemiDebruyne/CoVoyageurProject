@@ -7,7 +7,7 @@
     <title>CoVoyageurView</title>
     <base href="/" />
     <link href="css/style.css" rel="stylesheet" />
-
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
     <!-- CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -37,11 +37,16 @@
             .input-register {
                 display: block;
                 border-color: #cbd5e1;
-                border-width:2px;
+                border-width: 2px;
                 margin-top: .25rem;
                 margin-bottom: .5rem;
                 width: 100%;
                 /*border-radius: 3px;*/
+            }
+
+            .input-register:invalid{
+                border-color: red;
+                border-width: 2px
             }
         }
     </style>
@@ -65,6 +70,7 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="https://kit.fontawesome.com/7585c65c03.js" crossorigin="anonymous"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
 
 </body>
 
