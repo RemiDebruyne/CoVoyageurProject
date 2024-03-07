@@ -9,7 +9,7 @@ namespace CoVoyageurView.Services
         private readonly HttpClient _httpClient;
 
         protected const string _apiRoute = "http://localhost:5199/api/";
-        protected string Controller { get; set; }
+        protected virtual string Controller { get; set; }
 
         public GenericApiQueryService(HttpClient httpClient)
         {
