@@ -1,14 +1,14 @@
 ﻿using CoVoyageurCore.Models;
 using CoVoyageurCore.Datas;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace CoVoyageurAPI.Datas
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext() : base()
+        {
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }
@@ -16,6 +16,11 @@ namespace CoVoyageurAPI.Datas
         public DbSet<Ride> Rides { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data source=(localdb)\\MSSQLLocalDB; Database=CoVoyageurProject;");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

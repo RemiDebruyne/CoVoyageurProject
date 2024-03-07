@@ -59,8 +59,6 @@ namespace CoVoyageurAPI.Repositories
                 ratingFromDb.RatedUserId = rating.RatedUserId;
             if (ratingFromDb.RatedUser != rating.RatedUser)
                 ratingFromDb.RatedUser = rating.RatedUser;
-            if (ratingFromDb.RatingUserId != rating.RatingUserId)
-                ratingFromDb.RatingUserId = rating.RatingUserId;
             if (ratingFromDb.RatingUser != rating.RatingUser)
                 ratingFromDb.RatingUser = rating.RatingUser;
             if (ratingFromDb.Score != rating.Score)

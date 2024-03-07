@@ -15,25 +15,25 @@ namespace CoVoyageurCore.Datas
         public static readonly List<Profile> profiles = new List<Profile>()
         {
             new Profile{ Id = 1, Rating = 5, Review = "¨Parfait", Preferences = Profile.Preference.Animaux, UserId = 1},
-            new Profile{ Id = 1, Rating = 4, Review = "Bien", Preferences = Profile.Preference.Tabac, UserId = 2},
-            new Profile{ Id = 1, Rating = 3, Review = "Moyen", Preferences = Profile.Preference.Musique, UserId = 3},
-            new Profile{ Id = 1, Rating = 2, Review = "Mauvais", Preferences = Profile.Preference.Animaux, UserId = 4},
+            new Profile{ Id = 2, Rating = 4, Review = "Bien", Preferences = Profile.Preference.Tabac, UserId = 2},
+            new Profile{ Id = 3, Rating = 3, Review = "Moyen", Preferences = Profile.Preference.Musique, UserId = 3},
+            new Profile{ Id = 4, Rating = 2, Review = "Mauvais", Preferences = Profile.Preference.Animaux, UserId = 4},
         };
-        
+
         public static readonly List<Car> cars = new List<Car>()
         {
-            new Car{ Id = 1, LicensePlate = "AB-123-RT", Model = "¨Fiesta", Brand = "Ford", UserId = 1, Color = Car.CarColor.Red},
-            new Car{ Id = 2, LicensePlate = "AB-123-RT", Model = "¨Fiesta", Brand = "Ford", UserId = 2, Color = Car.CarColor.Red},
-            new Car{ Id = 3, LicensePlate = "AB-123-RT", Model = "¨Fiesta", Brand = "Ford", UserId = 3, Color = Car.CarColor.Red},
-            new Car{ Id = 4, LicensePlate = "AB-123-RT", Model = "¨Fiesta", Brand = "Ford", UserId = 4, Color = Car.CarColor.Red},
+            new Car{ Id = 1, LicensePlate = "OG-666-OG", Model = "Fiesta", Brand = "Ford", UserId = 1, Color = Car.CarColor.Red},
+            new Car{ Id = 2, LicensePlate = "AB-123-RT", Model = "Fiesta", Brand = "Ford", UserId = 2, Color = Car.CarColor.Red},
+            new Car{ Id = 3, LicensePlate = "AB-123-RT", Model = "Fiesta", Brand = "Ford", UserId = 3, Color = Car.CarColor.Red},
+            new Car{ Id = 4, LicensePlate = "AB-123-RT", Model = "Fiesta", Brand = "Ford", UserId = 4, Color = Car.CarColor.Red},
         };
 
         public static readonly List<Ride> rides = new List<Ride>()
         {
-            new Ride{ Id = 1, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 1},
-            new Ride{ Id = 2, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 2},
-            new Ride{ Id = 3, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 3},
-            new Ride{ Id = 4, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 4},
+            new Ride{ Id = 1, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 1, Arrival = "10h00",Departure = "9h00"},
+            new Ride{ Id = 2, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 2, Arrival = "10h00",Departure = "9h00"},
+            new Ride{ Id = 3, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 3, Arrival = "10h00",Departure = "9h00"},
+            new Ride{ Id = 4, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 4, Arrival = "10h00",Departure = "9h00"},
         };
 
         public static readonly List<Reservation> reservations = new List<Reservation>()
@@ -44,8 +44,8 @@ namespace CoVoyageurCore.Datas
 
         public static readonly List<Rating> ratings = new List<Rating>()
         {
-            new Rating{ Id = 1, RideId = 1, RatedUserId = 1, RatingUserId = 2, Score = 5, Comment = "Good", RatingDate = new DateTime(2000, 1, 1)},
-            new Rating{ Id = 2, RideId = 2, RatedUserId = 3, RatingUserId = 4, Score = 2, Comment = "Bad", RatingDate = new DateTime(2000, 1, 1)},
+            new Rating{ Id = 1, RideId = 1, RatedUserId=1, Score = 5, Comment = "Good", RatingDate = new DateTime(2000, 1, 1)},
+            new Rating{ Id = 2, RideId = 2, RatedUserId=2, Score = 2, Comment = "Bad", RatingDate = new DateTime(2000, 1, 1)},
         };
     }
 }

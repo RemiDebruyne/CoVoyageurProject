@@ -13,16 +13,15 @@ namespace CoVoyageurCore.Models
     [Table("profile")]
     public class Profile
     {
-        //[Column("id")]
+        [Column("id")]
         public int Id { get; set; }
 
-
-        //[Column("rating")]
-        //[Required]
+        [Column("rating")]
+        [Required]
         public int? Rating { get; set; }
 
-        //[Column("review")]
-        //[Required]
+        [Column("review")]
+        [Required]
         public string? Review { get; set; }
 
         public int UserId { get; set; }
