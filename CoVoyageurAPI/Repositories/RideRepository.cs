@@ -56,7 +56,6 @@ namespace CoVoyageurAPI.Repositories
             if (rideFromDb.User != ride.User)
                 rideFromDb.User = ride.User;
          
-
             return await _dbContext.SaveChangesAsync() > 0;
         }
 

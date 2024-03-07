@@ -10,12 +10,12 @@ namespace CoVoyageurAPI.Datas
         {
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Profile> Profiles { get; set; }
-        public DbSet<Car> Cars { get; set; }
-        public DbSet<Ride> Rides { get; set; }
-        public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<User>? Users { get; set; }
+        public DbSet<Profile>? Profiles { get; set; }
+        public DbSet<Car>? Cars { get; set; }
+        public DbSet<Ride>? Rides { get; set; }
+        public DbSet<Reservation>? Reservations { get; set; }
+        public DbSet<Rating>? Ratings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

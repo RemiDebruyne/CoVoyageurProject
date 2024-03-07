@@ -1,10 +1,5 @@
 ﻿using CoVoyageurCore.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoVoyageurCore.Models
 {
@@ -13,6 +8,9 @@ namespace CoVoyageurCore.Models
     {
         [Column("id")]
         public int Id { get; set; }
+
+        [Column("userId")]
+        public int UserId { get; set; }
 
         [Column("creationDate")]
         public DateTime CreationDate { get; set; }
@@ -31,10 +29,7 @@ namespace CoVoyageurCore.Models
 
         [Column("arrival")]
         public string Arrival { get; set; }
-
-        public int UserId { get; set; } 
-        public User User { get; set; }
-
-       
+      
+        public User User { get; set; }    
     }
 }
