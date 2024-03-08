@@ -19,7 +19,7 @@ namespace CoVoyageurAPI.Datas
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\CoVoyageur;Integrated Security=True");
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\CoVoyageur; Database=CoVoyageur; Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
