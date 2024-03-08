@@ -51,6 +51,8 @@ namespace CoVoyageurCore.Models
 
         public bool IsAdmin { get; set; } = false;
 
+        public Rating? UserRating { get; set; }
+
         public ICollection<Ride> Rides { get; set; }
         public ICollection<Profile> Profiles { get; set; }
         public ICollection<User> Users { get; set; }
