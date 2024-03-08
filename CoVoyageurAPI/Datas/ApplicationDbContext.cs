@@ -19,16 +19,36 @@ namespace CoVoyageurAPI.Datas
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data source=(localdb)\\MSSQLLocalDB; Database=CoVoyageurProject;");
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\CoVoyageur; Database=CoVoyageur; Integrated Security=True");
         }
 
-         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {        
             modelBuilder.Entity<Rating>()
-            .HasMany(t => t.RatedUserId);
-       
+                .HasOne(r => r.RatedUser)
+                .WithMany(u=>u.RatedRatings)
+                .HasForeignKey(r => r.RatedUserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<User>().HasData(InitialCoVoyageur.users);   
+            modelBuilder.Entity<Rating>()
+                .HasOne(r => r.RatingUser)
+                .WithMany(u => u.RatingRatings)
+                .HasForeignKey(r => r.RatingUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Ride)
+                .WithMany()
+                .HasForeignKey(r => r.RideId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<User>().HasData(InitialCoVoyageur.users);
             modelBuilder.Entity<Profile>().HasData(InitialCoVoyageur.profiles);
             modelBuilder.Entity<Car>().HasData(InitialCoVoyageur.cars);
             modelBuilder.Entity<Ride>().HasData(InitialCoVoyageur.rides);
@@ -37,3 +57,5 @@ namespace CoVoyageurAPI.Datas
         }
     }
 }
+
+
