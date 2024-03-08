@@ -1,5 +1,6 @@
 using CoVoyageurCore.Models;
 using CoVoyageurView;
+using CoVoyageurView.Data;
 using CoVoyageurView.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -11,7 +12,11 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddMudServices();
 builder.Services.AddScoped<IApiQueryService<User>, UserApiService>();
 builder.Services.AddScoped<IApiQueryService<Profile>, ProfileApiService>();
+builder.Services.AddScoped<IApiQueryService<Car>,CarApiService>();
+builder.Services.AddScoped<IApiQueryService<Ride>,RideApiService>();
+builder.Services.AddSingleton<FakeDb>();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5199/api/") });
 
 await builder.Build().RunAsync();
 
