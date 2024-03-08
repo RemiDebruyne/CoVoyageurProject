@@ -23,41 +23,30 @@ namespace CoVoyageurAPI.Datas
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //        modelBuilder.Entity<Rating>()
-            //            .HasOne(r => r.User)
-            //            .WithOne(u => u.Ratings)
-            //.           HasForeignKey<Rating>(r => r.UserId);
-
+        {        
             modelBuilder.Entity<Rating>()
                 .HasOne(r => r.RatedUser)
                 .WithMany(u=>u.RatedRatings)
                 .HasForeignKey(r => r.RatedUserId)
-                .OnDelete(DeleteBehavior.NoAction); // Spécifier NO ACTION pour la suppression
-
-            //modelBuilder.Entity<Rating>()
-            //    .HasOne(r => r.RatingUser)
-            //    .WithMany()
-            //    .HasForeignKey(r => r.UserId)
-            //    .OnDelete(DeleteBehavior.NoAction); // Spécifier NO ACTION pour la suppression
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Rating>()
                 .HasOne(r => r.RatingUser)
                 .WithMany(u => u.RatingRatings)
                 .HasForeignKey(r => r.RatingUserId)
-                .OnDelete(DeleteBehavior.NoAction); // Spécifier NO ACTION pour la suppression
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Reservation>()
                 .HasOne(r => r.User)
                 .WithMany()
                 .HasForeignKey(r => r.UserId)
-                .OnDelete(DeleteBehavior.NoAction); // Modifier le comportement de suppression
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Reservation>()
                 .HasOne(r => r.Ride)
                 .WithMany()
                 .HasForeignKey(r => r.RideId)
-                .OnDelete(DeleteBehavior.NoAction); // Modifier le comportement de suppression
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<User>().HasData(InitialCoVoyageur.users);
             modelBuilder.Entity<Profile>().HasData(InitialCoVoyageur.profiles);

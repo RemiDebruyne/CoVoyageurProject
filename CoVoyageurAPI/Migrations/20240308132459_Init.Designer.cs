@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoVoyageurAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240308132135_Init")]
+    [Migration("20240308132459_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
