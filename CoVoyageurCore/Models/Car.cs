@@ -38,6 +38,7 @@ namespace CoVoyageurCore.Models
 
         public enum CarColor
         {
+            Nothing,
             White,
             Black,
             Red,

@@ -6,8 +6,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>CoVoyageurView</title>
     <base href="/" />
-    <link href="css/app.css" rel="stylesheet"/>
-    <link href="css/app.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <!-- CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#e9faf5',
+                            100: '#baefde',
+                            200: '#98e8cf',
+                            300: '#6addb9',
+                            400: '#4dd6ab',
+                            500: '#20cc96',
+                            600: '#1dba89',
+                            700: '#17916b',
+                            800: '#127053',
+                            900: '#0d563f',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .input-register {
+                display: block;
+                border-color: #cbd5e1;
+                border-width: 2px;
+                background-color: white;
+                min-height: 1.5rem;
+                margin-top: .25rem;
+                margin-bottom: .5rem;
+                width: 100%;
+                /*border-radius: 3px;*/
+            }
+
+                .input-register:invalid {
+                    border-color: red;
+                    border-width: 2px
+                }
+
+            .btn {
+                /*px-12 py-2 mt-4 bg-primary-500 font-bold text-white hover:bg-primary-700*/
+                padding-inline: 3rem;
+                padding-block: .5rem;
+                margin-top: 1rem;
+                background-color: #20cc96;
+                font-weight: bold;
+                color: white
+            }
+
+                .btn:hover {
+                    background-color: #17916b;
+                }
+
+            .card-shadow {
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            }
+        }
+    </style>
+
+    <!-- Enable when not using Tailwind CDN -->
+    <!--<link href="css/app.min.css" rel="stylesheet" />-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -25,6 +90,7 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="https://kit.fontawesome.com/7585c65c03.js" crossorigin="anonymous"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
 
 </body>
 

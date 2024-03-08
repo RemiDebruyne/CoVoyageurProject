@@ -19,7 +19,7 @@ namespace CoVoyageurCore.Models
         public int RatedUserId { get; set; }
 
         [Column("score")]
-        public int Score { get; set; }
+        public decimal Score { get; set; }
 
         [Column("comment")]
         public string? Comment { get; set; }

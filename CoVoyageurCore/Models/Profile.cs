@@ -29,7 +29,7 @@ namespace CoVoyageurCore.Models
 
         public List<Car>? Cars { get; set; }
 
-        public Preference Preferences { get; set; }
+        public List<Preference>? Preferences { get; set; }
 
         public enum Preference
         {

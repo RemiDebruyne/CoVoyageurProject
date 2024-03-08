@@ -586,12 +586,17 @@ video {
   margin-right: 2.5rem;
 }
 
-.me-2 {
-  margin-inline-end: 0.5rem;
+.my-12 {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
-.mt-4 {
-  margin-top: 1rem;
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-16 {
+  margin-top: 4rem;
 }
 
 .block {
@@ -623,12 +628,29 @@ video {
   min-height: 300px;
 }
 
-.w-\[66\%\] {
-  width: 66%;
+.w-\[45\%\] {
+  width: 45%;
+}
+
+.w-\[660px\] {
+  width: 660px;
+}
+
+.w-\[90\%\] {
+  width: 90%;
+}
+
+.w-auto {
+  width: auto;
 }
 
 .w-full {
   width: 100%;
+}
+
+.columns-2xl {
+  -moz-columns: 42rem;
+       columns: 42rem;
 }
 
 .flex-col {
@@ -637,6 +659,10 @@ video {
 
 .items-center {
   align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 .justify-between {
@@ -651,6 +677,10 @@ video {
   gap: 0.5rem;
 }
 
+.gap-4 {
+  gap: 1rem;
+}
+
 .gap-5 {
   gap: 1.25rem;
 }
@@ -663,10 +693,6 @@ video {
 
 .overflow-hidden {
   overflow: hidden;
-}
-
-.text-nowrap {
-  text-wrap: nowrap;
 }
 
 .rounded-2xl {
@@ -706,13 +732,35 @@ video {
   padding-bottom: 1rem;
 }
 
+.pr-16 {
+  padding-right: 4rem;
+}
+
 .ps-3 {
   padding-inline-start: 0.75rem;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.text-end {
+  text-align: end;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .text-5xl {
   font-size: 3rem;
   line-height: 1;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-sm {
@@ -728,6 +776,10 @@ video {
   font-weight: 500;
 }
 
+.font-semibold {
+  font-weight: 600;
+}
+
 .text-primary-500 {
   --tw-text-opacity: 1;
   color: rgb(32 204 150 / var(--tw-text-opacity));
@@ -738,21 +790,6 @@ video {
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-
-/*input[type="date"]::-webkit-calendar-picker-indicator {
-    display: none;
-    -webkit-appearance: none;
-}
-
-input {
-    border: 0;
-    outline: 0;
-}
-
-    input:focus {
-        outline: none !important;
-    }
-*/
 
 *,
 ::before,

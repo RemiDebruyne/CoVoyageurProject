@@ -1,0 +1,31 @@
+﻿@page "/search"
+@layout SearchLayout
+
+<div class="w-9/12">
+    <div class="grid grid-cols-2">
+        <div class="bg-primary-500">
+        </div>
+        <div class="bg-blue-500">
+            @foreach(Ride ride in Rides)
+            {
+                <RideCard User="ride.User" Ride="ride" Rating="ride.User.UserRating" />
+            }
+        </div>
+
+
+
+
+    </div>
+</div>
+
+
+@code {
+
+    public List<Ride> Rides { get; set; } = new();
+
+    //Get list of ride from api
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+}
