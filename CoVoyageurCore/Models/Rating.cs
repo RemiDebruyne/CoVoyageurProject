@@ -12,9 +12,6 @@ namespace CoVoyageurCore.Models
         [Column("rideid")]
         public int RideId { get; set; }
 
-        [Column("userid")]
-        public int UserId { get; set; }
-
         [Column("ratinguserid")]
         public int RatingUserId { get; set; }
 
@@ -30,7 +27,8 @@ namespace CoVoyageurCore.Models
         [Column("ratingdate")]
         public DateTime RatingDate { get; set; }
 
-        public User User { get; set; }
+        public User RatingUser { get; set; }
+        public User RatedUser { get; set; }
         public Ride Ride { get; set; }
 
     }

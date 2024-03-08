@@ -51,6 +51,7 @@ namespace CoVoyageurCore.Models
 
         public bool IsAdmin { get; set; } = false;
 
-        public Rating Ratings { get; set; }
+        public List<Rating> RatedRatings { get; set; } = new();
+        public List<Rating> RatingRatings { get; set; } = new();
     }
 }

@@ -19,15 +19,45 @@ namespace CoVoyageurAPI.Datas
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data source=(localdb)\\MSSQLLocalDB; Database=CoVoyageurProject;");
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\CoVoyageur;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //        modelBuilder.Entity<Rating>()
+            //            .HasOne(r => r.User)
+            //            .WithOne(u => u.Ratings)
+            //.           HasForeignKey<Rating>(r => r.UserId);
+
             modelBuilder.Entity<Rating>()
+                .HasOne(r => r.RatedUser)
+                .WithMany(u=>u.RatedRatings)
+                .HasForeignKey(r => r.RatedUserId)
+                .OnDelete(DeleteBehavior.NoAction); // Spécifier NO ACTION pour la suppression
+
+            //modelBuilder.Entity<Rating>()
+            //    .HasOne(r => r.RatingUser)
+            //    .WithMany()
+            //    .HasForeignKey(r => r.UserId)
+            //    .OnDelete(DeleteBehavior.NoAction); // Spécifier NO ACTION pour la suppression
+
+            modelBuilder.Entity<Rating>()
+                .HasOne(r => r.RatingUser)
+                .WithMany(u => u.RatingRatings)
+                .HasForeignKey(r => r.RatingUserId)
+                .OnDelete(DeleteBehavior.NoAction); // Spécifier NO ACTION pour la suppression
+
+            modelBuilder.Entity<Reservation>()
                 .HasOne(r => r.User)
-                .WithOne(u => u.Ratings)
-    .           HasForeignKey<Rating>(r => r.UserId);
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.NoAction); // Modifier le comportement de suppression
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Ride)
+                .WithMany()
+                .HasForeignKey(r => r.RideId)
+                .OnDelete(DeleteBehavior.NoAction); // Modifier le comportement de suppression
 
             modelBuilder.Entity<User>().HasData(InitialCoVoyageur.users);
             modelBuilder.Entity<Profile>().HasData(InitialCoVoyageur.profiles);
@@ -38,3 +68,5 @@ namespace CoVoyageurAPI.Datas
         }
     }
 }
+
+
