@@ -1,0 +1,94 @@
+﻿@page "/register/profile"
+@using CoVoyageurView.Services
+@using static CoVoyageurCore.Models.Profile
+@layout NoMenuLayout
+@inject IApiQueryService<Profile> service;
+@inject NavigationManager Navigation
+<PageTitle>Profile</PageTitle>
+
+<div class=" flex flex-col items-center w-8/12 min-h-[80%] rounded-2xl bg-white overflow-hidden">
+    <h1 class="text-5xl text-center font-bold text-primary-500 my-5">Customize your profile</h1>
+
+    <EditForm Model="Profile" OnValidSubmit="HandleSubmit" class=" w-3/4">
+        <!-- Profile picture section -->
+        @* <section>
+        <EditForm Model="Profile"></EditForm>
+        <h2>Profile picture</h2>
+        </section> *@
+
+
+        <!-- Dropdown menu / multi-select-->
+        <!-- Preferences section section -->
+        <h2 class="text-lg text-center font-semibold my-3">My preferences</h2>
+        <p>It's important passenger and for us to know how you prefer to drive ! This way, we'll match you with people who better fit your preferences. If your in a hurry, you can still do this <NavLink href="/register/profile/car" class="text-sm font-thin text-blue-500 underline">later.</NavLink> </p>
+        
+
+        <div>
+            <InputCheckbox id="music" @bind-Value="Music" @onchange="() => AddPreference(Preference.Tabac, Music)"></InputCheckbox>
+            <label for="music">I like music</label>
+        </div>
+        <div>
+            <InputCheckbox id="tabaco" @bind-Value="Tabaco" @onchange="() => AddPreference(Preference.Tabac, Tabaco)"></InputCheckbox>
+            <label for="tabaco">I'm fine with people smoking a cigarette</label>
+        </div>
+        <div>
+            <InputCheckbox id="animal" @bind-Value="Animal" @onchange="() => AddPreference(Preference.Animaux, Animal)"></InputCheckbox>
+            <label for="animal">I'm fine with people having animals in the car</label>
+        </div>
+
+
+
+
+        <button type="submit" class="block mx-auto btn">Save</button>
+        <p class="text-red-500">@ErrorMessage</p>
+    </EditForm>
+</div>
+
+
+
+
+@code {
+    [Parameter]
+    public User User { get; set; }
+    public Profile Profile { get; set; } = new();
+    public string ErrorMessage { get; set; }
+
+    public bool Music { get; set; }
+    public bool Tabaco { get; set; }
+    public bool Animal { get; set; }
+
+
+
+
+
+    //TODO Get the user from her
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    public async void HandleSubmit()
+    {
+        var success = await service.Post(Profile);
+
+        if (!success)
+            ErrorMessage = "Something went wrong... Please try again";
+
+        if (success)
+        {
+            ErrorMessage = "";
+            Navigation.NavigateTo("/register/profile/car");
+
+        }
+
+    }
+
+    public void AddPreference(Preference preference, bool value)
+    {
+        if (value)
+            Profile.Preferences.Add(preference);
+        else
+            Profile.Preferences.Remove(preference);
+    }
+
+}

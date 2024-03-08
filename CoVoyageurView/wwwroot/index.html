@@ -38,15 +38,35 @@
                 display: block;
                 border-color: #cbd5e1;
                 border-width: 2px;
+                background-color: white;
+                min-height: 1.5rem;
                 margin-top: .25rem;
                 margin-bottom: .5rem;
                 width: 100%;
                 /*border-radius: 3px;*/
             }
 
-            .input-register:invalid{
-                border-color: red;
-                border-width: 2px
+                .input-register:invalid {
+                    border-color: red;
+                    border-width: 2px
+                }
+
+            .btn {
+                /*px-12 py-2 mt-4 bg-primary-500 font-bold text-white hover:bg-primary-700*/
+                padding-inline: 3rem;
+                padding-block: .5rem;
+                margin-top: 1rem;
+                background-color: #20cc96;
+                font-weight: bold;
+                color: white
+            }
+
+                .btn:hover {
+                    background-color: #17916b;
+                }
+
+            .card-shadow {
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             }
         }
     </style>

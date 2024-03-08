@@ -1,0 +1,40 @@
+﻿@page "/register/profile/car"
+@using CoVoyageurView.Services
+@using CoVoyageurCore.Models
+@layout NoMenuLayout
+@inject IApiQueryService<Car> service;
+@inject NavigationManager Navigation
+
+<PageTitle>Cars</PageTitle>
+<div class=" flex flex-col items-center w-8/12 min-h-[80%] rounded-2xl bg-white overflow-hidden">
+    <h1 class="text-5xl text-center font-bold text-primary-500 my-5">We're almost done !</h1>
+    <h2 class="text-lg text-center my-3">All you need to start diving is a car ! Not planning to be a driver ? You can <NavLink href="/" class="text-blue-500 underline">skip this step.</NavLink></h2>
+
+    <EditForm Model="Car">
+        <label for="model">Model</label>
+        <InputText id="model" class="input-register" @bind-Value="Car.Model"></InputText>
+
+        <label for="brand">Brand</label>
+        <InputText id="brand" class="input-register" @bind-Value="Car.Brand"></InputText>
+
+        <label for="license">License</label>
+        <InputText id="license" class="input-register" @bind-Value="Car.LicensePlate"></InputText>
+
+
+        <label for="color">Color</label>
+        <InputSelect id="color" class="input-register" @bind-Value="Car.Color">
+            @foreach (Car.CarColor color in Enum.GetValues(typeof(Car.CarColor)))
+            {
+                <option value="@color">@(color != Car.CarColor.Nothing ? color : "Select a color")</option>
+            }
+        </InputSelect>
+
+        <button type="submit" class="block mx-auto  mt-6 btn">Add</button>
+
+    </EditForm>
+</div>
+
+@code {
+    public Car Car { get; set; } = new();
+}
+    
