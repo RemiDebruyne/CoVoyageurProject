@@ -17,9 +17,9 @@ namespace CoVoyageurCore.Datas
         public static readonly List<Profile> profiles = new List<Profile>()
         {
             new Profile{ Id = 1, Rating = 5, Review = "¨Parfait", Preferences = new() {Profile.Preference.Animaux }, UserId = 1},
-            new Profile{ Id = 1, Rating = 4, Review = "Bien", Preferences = new() { Profile.Preference.Tabac }, UserId = 2},
-            new Profile{ Id = 1, Rating = 3, Review = "Moyen", Preferences = new() { Profile.Preference.Musique }, UserId = 3},
-            new Profile{ Id = 1, Rating = 2, Review = "Mauvais", Preferences = new() { Profile.Preference.Animaux }, UserId = 4},
+            new Profile{ Id = 2, Rating = 4, Review = "Bien", Preferences = new() { Profile.Preference.Tabac }, UserId = 2},
+            new Profile{ Id = 3, Rating = 3, Review = "Moyen", Preferences = new() { Profile.Preference.Musique }, UserId = 3},
+            new Profile{ Id = 4, Rating = 2, Review = "Mauvais", Preferences = new() { Profile.Preference.Animaux }, UserId = 4},
         };
 
         public static readonly List<Car> cars = new List<Car>()
