@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoVoyageurAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240307133523_initialMigration")]
-    partial class initialMigration
+    [Migration("20240308091148_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,7 +115,7 @@ namespace CoVoyageurAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Preferences")
+                    b.Property<int>("Preferences")
                         .HasColumnType("int");
 
                     b.Property<int?>("Rating")
@@ -187,15 +187,15 @@ namespace CoVoyageurAPI.Migrations
 
                     b.Property<int>("RatedUserId")
                         .HasColumnType("int")
-                        .HasColumnName("ratedUserId");
+                        .HasColumnName("rateduserid");
 
                     b.Property<DateTime>("RatingDate")
                         .HasColumnType("datetime2")
-                        .HasColumnName("ratingDate");
+                        .HasColumnName("ratingdate");
 
                     b.Property<int>("RatingUserId")
                         .HasColumnType("int")
-                        .HasColumnName("ratingUserId");
+                        .HasColumnName("ratinguserid");
 
                     b.Property<int>("RideId")
                         .HasColumnType("int")
@@ -205,13 +205,16 @@ namespace CoVoyageurAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("score");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("userid");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("RatedUserId");
-
-                    b.HasIndex("RatingUserId");
-
                     b.HasIndex("RideId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("rating");
 
@@ -224,7 +227,8 @@ namespace CoVoyageurAPI.Migrations
                             RatingDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RatingUserId = 1,
                             RideId = 1,
-                            Score = 5
+                            Score = 5,
+                            UserId = 1
                         },
                         new
                         {
@@ -234,7 +238,8 @@ namespace CoVoyageurAPI.Migrations
                             RatingDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RatingUserId = 2,
                             RideId = 2,
-                            Score = 2
+                            Score = 2,
+                            UserId = 0
                         });
                 });
 
@@ -512,29 +517,21 @@ namespace CoVoyageurAPI.Migrations
 
             modelBuilder.Entity("CoVoyageurCore.Models.Rating", b =>
                 {
-                    b.HasOne("CoVoyageurCore.Models.User", "RatedUser")
-                        .WithMany()
-                        .HasForeignKey("RatedUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CoVoyageurCore.Models.User", "RatingUser")
-                        .WithMany()
-                        .HasForeignKey("RatingUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CoVoyageurCore.Models.Ride", "Ride")
-                        .WithMany()
+                        .WithMany("Ratings")
                         .HasForeignKey("RideId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("RatedUser");
-
-                    b.Navigation("RatingUser");
+                    b.HasOne("CoVoyageurCore.Models.User", "User")
+                        .WithOne("Ratings")
+                        .HasForeignKey("CoVoyageurCore.Models.Rating", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Ride");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CoVoyageurCore.Models.Reservation", b =>
@@ -570,6 +567,17 @@ namespace CoVoyageurAPI.Migrations
             modelBuilder.Entity("CoVoyageurCore.Models.Profile", b =>
                 {
                     b.Navigation("Cars");
+                });
+
+            modelBuilder.Entity("CoVoyageurCore.Models.Ride", b =>
+                {
+                    b.Navigation("Ratings");
+                });
+
+            modelBuilder.Entity("CoVoyageurCore.Models.User", b =>
+                {
+                    b.Navigation("Ratings")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

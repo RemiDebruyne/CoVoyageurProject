@@ -22,13 +22,14 @@ namespace CoVoyageurAPI.Datas
             optionsBuilder.UseSqlServer("Data source=(localdb)\\MSSQLLocalDB; Database=CoVoyageurProject;");
         }
 
-         protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Rating>()
-            .HasMany(t => t.RatedUserId);
-       
+                .HasOne(r => r.User)
+                .WithOne(u => u.Ratings)
+    .           HasForeignKey<Rating>(r => r.UserId);
 
-            modelBuilder.Entity<User>().HasData(InitialCoVoyageur.users);   
+            modelBuilder.Entity<User>().HasData(InitialCoVoyageur.users);
             modelBuilder.Entity<Profile>().HasData(InitialCoVoyageur.profiles);
             modelBuilder.Entity<Car>().HasData(InitialCoVoyageur.cars);
             modelBuilder.Entity<Ride>().HasData(InitialCoVoyageur.rides);
