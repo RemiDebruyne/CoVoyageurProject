@@ -1,4 +1,6 @@
 ﻿using CoVoyageurCore.Models;
+using System.Numerics;
+using System.Reflection;
 
 namespace CoVoyageurCore.Datas
 {
@@ -43,9 +45,28 @@ namespace CoVoyageurCore.Datas
         };
 
         public static readonly List<Rating> ratings = new List<Rating>()
-        {
-            new Rating{ Id = 1, RideId = 1, RatingUserId=1, RatedUserId=1, Score = 5, Comment = "Good", RatingDate = new DateTime(2000, 1, 1)},
-            new Rating{ Id = 2, RideId = 2, RatingUserId=2, RatedUserId=2, Score = 2, Comment = "Bad", RatingDate = new DateTime(2000, 1, 1)},
-        };
+{
+    new Rating
+    {
+        Id = 1,
+        UserId = 1,
+        RideId = 1,
+        RatingUserId = 1,
+        RatedUserId = 1,
+        Score = 5,
+        Comment = "Good",
+        RatingDate = new DateTime(2000, 1, 1)
+    },
+    new Rating
+    {
+        Id = 2,
+        RideId = 2,
+        RatingUserId = 2,
+        RatedUserId = 2,
+        Score = 2,
+        Comment = "Bad",
+        RatingDate = new DateTime(2000, 1, 1)
+    }
+};
     }
 }

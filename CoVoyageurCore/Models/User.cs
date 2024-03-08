@@ -40,7 +40,7 @@ namespace CoVoyageurCore.Models
 
         [Column("birth_date")]
         [Required]
-        [JsonIgnore] // la prop sera ignorée pour la serialisation de l'objet
+        [JsonIgnore]
         public DateTime BirthDate { get; set; }
 
         [Column("gender")]
@@ -50,5 +50,9 @@ namespace CoVoyageurCore.Models
         public string? Gender { get; set; }
 
         public bool IsAdmin { get; set; } = false;
+
+        public ICollection<Ride> Rides { get; set; }
+        public ICollection<Profile> Profiles { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }

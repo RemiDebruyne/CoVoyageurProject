@@ -29,7 +29,8 @@ namespace CoVoyageurCore.Models
 
         [Column("arrival")]
         public string Arrival { get; set; }
-      
-        public User User { get; set; }    
+
+        public User User { get; set; }   
+        public ICollection<Rating> Ratings { get; set; }
     }
 }

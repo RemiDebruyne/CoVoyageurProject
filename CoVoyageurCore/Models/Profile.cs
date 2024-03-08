@@ -29,7 +29,7 @@ namespace CoVoyageurCore.Models
 
         public List<Car>? Cars { get; set; }
 
-        public Preference? Preferences { get; set; }
+        public Preference Preferences { get; set; }
 
         public enum Preference
         {
@@ -37,6 +37,9 @@ namespace CoVoyageurCore.Models
             Tabac,
             Animaux
         }
+
+      //  public ICollection<User> Users { get; set; }
+
 
     }
 }

@@ -1,10 +1,6 @@
-﻿using CoVoyageurCore.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoVoyageurCore.Models
 {
@@ -15,13 +11,24 @@ namespace CoVoyageurCore.Models
         public int Id { get; set; }
 
         [Column("rideid")]
+        [ForeignKey("Ride")]
         public int RideId { get; set; }
+        public virtual Ride Ride { get; set; }
 
-        [Column("ratingUserId")]
+        [Column("userid")]
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
+
+        [Column("ratinguserid")]
+        [ForeignKey("RatingUser")]
         public int RatingUserId { get; set; }
+        public virtual User RatingUser { get; set; }
 
-        [Column("ratedUserId")]
+        [Column("rateduserid")]
+        [ForeignKey("RatedUser")]
         public int RatedUserId { get; set; }
+        public virtual User RatedUser { get; set; }
 
         [Column("score")]
         public int Score { get; set; }
@@ -29,15 +36,7 @@ namespace CoVoyageurCore.Models
         [Column("comment")]
         public string? Comment { get; set; }
 
-        [Column("ratingDate")]
+        [Column("ratingdate")]
         public DateTime RatingDate { get; set; }
-
-        public Ride Ride { get; set; }      
-        public User RatedUser { get; set; }
-        public User RatingUser { get; set; }
-
-        
-    
-       
     }
 }
