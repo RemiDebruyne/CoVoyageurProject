@@ -49,7 +49,6 @@ namespace CoVoyageurCore.Datas
     new Rating
     {
         Id = 1,
-        UserId = 1,
         RideId = 1,
         RatingUserId = 1,
         RatedUserId = 1,

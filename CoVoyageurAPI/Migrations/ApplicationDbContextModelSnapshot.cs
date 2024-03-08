@@ -203,16 +203,13 @@ namespace CoVoyageurAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("score");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("userid");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RideId");
+                    b.HasIndex("RatedUserId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("RatingUserId");
+
+                    b.HasIndex("RideId");
 
                     b.ToTable("rating");
 
@@ -225,8 +222,7 @@ namespace CoVoyageurAPI.Migrations
                             RatingDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RatingUserId = 1,
                             RideId = 1,
-                            Score = 5,
-                            UserId = 1
+                            Score = 5
                         },
                         new
                         {
@@ -236,8 +232,7 @@ namespace CoVoyageurAPI.Migrations
                             RatingDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RatingUserId = 2,
                             RideId = 2,
-                            Score = 2,
-                            UserId = 0
+                            Score = 2
                         });
                 });
 
@@ -515,21 +510,29 @@ namespace CoVoyageurAPI.Migrations
 
             modelBuilder.Entity("CoVoyageurCore.Models.Rating", b =>
                 {
+                    b.HasOne("CoVoyageurCore.Models.User", "RatedUser")
+                        .WithMany("RatedRatings")
+                        .HasForeignKey("RatedUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("CoVoyageurCore.Models.User", "RatingUser")
+                        .WithMany("RatingRatings")
+                        .HasForeignKey("RatingUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("CoVoyageurCore.Models.Ride", "Ride")
                         .WithMany("Ratings")
                         .HasForeignKey("RideId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CoVoyageurCore.Models.User", "User")
-                        .WithOne("Ratings")
-                        .HasForeignKey("CoVoyageurCore.Models.Rating", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("RatedUser");
+
+                    b.Navigation("RatingUser");
 
                     b.Navigation("Ride");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CoVoyageurCore.Models.Reservation", b =>
@@ -537,13 +540,13 @@ namespace CoVoyageurAPI.Migrations
                     b.HasOne("CoVoyageurCore.Models.Ride", "Ride")
                         .WithMany()
                         .HasForeignKey("RideId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CoVoyageurCore.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Ride");
@@ -574,8 +577,9 @@ namespace CoVoyageurAPI.Migrations
 
             modelBuilder.Entity("CoVoyageurCore.Models.User", b =>
                 {
-                    b.Navigation("Ratings")
-                        .IsRequired();
+                    b.Navigation("RatedRatings");
+
+                    b.Navigation("RatingRatings");
                 });
 #pragma warning restore 612, 618
         }
