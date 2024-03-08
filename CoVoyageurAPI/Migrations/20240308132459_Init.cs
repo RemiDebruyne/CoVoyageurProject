@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CoVoyageurAPI.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,7 +38,7 @@ namespace CoVoyageurAPI.Migrations
                     rating = table.Column<int>(type: "int", nullable: false),
                     review = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Preferences = table.Column<int>(type: "int", nullable: true)
+                    Preferences = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,11 +112,11 @@ namespace CoVoyageurAPI.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     rideid = table.Column<int>(type: "int", nullable: false),
-                    ratingUserId = table.Column<int>(type: "int", nullable: false),
-                    ratedUserId = table.Column<int>(type: "int", nullable: false),
+                    ratinguserid = table.Column<int>(type: "int", nullable: false),
+                    rateduserid = table.Column<int>(type: "int", nullable: false),
                     score = table.Column<int>(type: "int", nullable: false),
                     comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ratingDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ratingdate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,17 +128,15 @@ namespace CoVoyageurAPI.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_rating_user_ratedUserId",
-                        column: x => x.ratedUserId,
+                        name: "FK_rating_user_rateduserid",
+                        column: x => x.rateduserid,
                         principalTable: "user",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_rating_user_ratingUserId",
-                        column: x => x.ratingUserId,
+                        name: "FK_rating_user_ratinguserid",
+                        column: x => x.ratinguserid,
                         principalTable: "user",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -159,14 +157,12 @@ namespace CoVoyageurAPI.Migrations
                         name: "FK_reservation_ride_rideId",
                         column: x => x.rideId,
                         principalTable: "ride",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_reservation_user_userId",
                         column: x => x.userId,
                         principalTable: "user",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.InsertData(
@@ -215,7 +211,7 @@ namespace CoVoyageurAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "rating",
-                columns: new[] { "id", "comment", "ratedUserId", "ratingDate", "ratingUserId", "rideid", "score" },
+                columns: new[] { "id", "comment", "rateduserid", "ratingdate", "ratinguserid", "rideid", "score" },
                 values: new object[,]
                 {
                     { 1, "Good", 1, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, 5 },
@@ -247,14 +243,14 @@ namespace CoVoyageurAPI.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_rating_ratedUserId",
+                name: "IX_rating_rateduserid",
                 table: "rating",
-                column: "ratedUserId");
+                column: "rateduserid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_rating_ratingUserId",
+                name: "IX_rating_ratinguserid",
                 table: "rating",
-                column: "ratingUserId");
+                column: "ratinguserid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_rating_rideid",

@@ -50,11 +50,11 @@ namespace CoVoyageurCore.Models
         public string? Gender { get; set; }
 
         public bool IsAdmin { get; set; } = false;
-
         public Rating? UserRating { get; set; }
+        public Profile Profile { get; set; }
 
-        public ICollection<Ride> Rides { get; set; }
-        public ICollection<Profile> Profiles { get; set; }
-        public ICollection<User> Users { get; set; }
+        public List<Rating> RatedRatings { get; set; } = new();
+        public List<Rating> RatingRatings { get; set; } = new();
+
     }
 }

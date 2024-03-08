@@ -113,7 +113,7 @@ namespace CoVoyageurAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Preferences")
+                    b.Property<int>("Preferences")
                         .HasColumnType("int");
 
                     b.Property<int?>("Rating")
@@ -185,15 +185,15 @@ namespace CoVoyageurAPI.Migrations
 
                     b.Property<int>("RatedUserId")
                         .HasColumnType("int")
-                        .HasColumnName("ratedUserId");
+                        .HasColumnName("rateduserid");
 
                     b.Property<DateTime>("RatingDate")
                         .HasColumnType("datetime2")
-                        .HasColumnName("ratingDate");
+                        .HasColumnName("ratingdate");
 
                     b.Property<int>("RatingUserId")
                         .HasColumnType("int")
-                        .HasColumnName("ratingUserId");
+                        .HasColumnName("ratinguserid");
 
                     b.Property<int>("RideId")
                         .HasColumnType("int")
@@ -511,19 +511,19 @@ namespace CoVoyageurAPI.Migrations
             modelBuilder.Entity("CoVoyageurCore.Models.Rating", b =>
                 {
                     b.HasOne("CoVoyageurCore.Models.User", "RatedUser")
-                        .WithMany()
+                        .WithMany("RatedRatings")
                         .HasForeignKey("RatedUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CoVoyageurCore.Models.User", "RatingUser")
-                        .WithMany()
+                        .WithMany("RatingRatings")
                         .HasForeignKey("RatingUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CoVoyageurCore.Models.Ride", "Ride")
-                        .WithMany()
+                        .WithMany("Ratings")
                         .HasForeignKey("RideId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -540,13 +540,13 @@ namespace CoVoyageurAPI.Migrations
                     b.HasOne("CoVoyageurCore.Models.Ride", "Ride")
                         .WithMany()
                         .HasForeignKey("RideId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CoVoyageurCore.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Ride");
@@ -568,6 +568,18 @@ namespace CoVoyageurAPI.Migrations
             modelBuilder.Entity("CoVoyageurCore.Models.Profile", b =>
                 {
                     b.Navigation("Cars");
+                });
+
+            modelBuilder.Entity("CoVoyageurCore.Models.Ride", b =>
+                {
+                    b.Navigation("Ratings");
+                });
+
+            modelBuilder.Entity("CoVoyageurCore.Models.User", b =>
+                {
+                    b.Navigation("RatedRatings");
+
+                    b.Navigation("RatingRatings");
                 });
 #pragma warning restore 612, 618
         }
