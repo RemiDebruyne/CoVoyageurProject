@@ -12,25 +12,28 @@ namespace CoVoyageurCore.Models
     [Table("car")]
     public class Car
     {
-        //[Column("id")]
+        [Column("id")]
         public int Id { get; set; }
 
-        //[Column("license_plate")]
-        //[Required]
+        [Column("license_plate")]
+        [Required]
         public string? LicensePlate { get; set; }
 
-        //[Column("model")]
-        //[Required]
+        [Column("model")]
+        [Required]
         public string? Model { get; set; }
 
-        //[Column("brand")]
-        //[Required]
+        [Column("brand")]
+        [Required]
         public string? Brand { get; set; }
 
-        //[Column("color")]
-        //[Required]
+        [Column("userId")]
+        [Required]
         public int UserId { get; set; }
+
         public User User { get; set; }
+
+        [Column("color")]
         public CarColor Color { get; set; }
 
         public enum CarColor

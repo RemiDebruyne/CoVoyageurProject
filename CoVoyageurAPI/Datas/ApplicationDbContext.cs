@@ -1,14 +1,14 @@
 ﻿using CoVoyageurCore.Models;
 using CoVoyageurCore.Datas;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace CoVoyageurAPI.Datas
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext() : base()
+        {
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }
@@ -17,9 +17,18 @@ namespace CoVoyageurAPI.Datas
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Rating> Ratings { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            modelBuilder.Entity<User>().HasData(InitialCoVoyageur.users);
+            optionsBuilder.UseSqlServer("Data source=(localdb)\\MSSQLLocalDB; Database=CoVoyageurProject;");
+        }
+
+         protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Rating>()
+            .HasMany(t => t.RatedUserId);
+       
+
+            modelBuilder.Entity<User>().HasData(InitialCoVoyageur.users);   
             modelBuilder.Entity<Profile>().HasData(InitialCoVoyageur.profiles);
             modelBuilder.Entity<Car>().HasData(InitialCoVoyageur.cars);
             modelBuilder.Entity<Ride>().HasData(InitialCoVoyageur.rides);
