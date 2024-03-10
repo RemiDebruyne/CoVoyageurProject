@@ -77,7 +77,7 @@ namespace CoVoyageurAPI.Controllers
         {
             //TODO crypter le mdp du loginDTO pour le comparer au mdp dans la ddb (il faut aussi ajouter le cryptage dans le UserController)
             var userToLog = await _userRepository.Get(u => u.Email == loginDTO.Email && u.Password == loginDTO.Password);
-            if (userToLog != null)
+            if (userToLog == null)
                 return Unauthorized("Email or password is incorrect");
 
 
@@ -86,7 +86,7 @@ namespace CoVoyageurAPI.Controllers
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Role, role),
-                new Claim("Userid", userToLog.Id.ToString()),
+                new Claim("UserId", userToLog.Id.ToString()),
             };
 
             SigningCredentials signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_appSettings.SecretKey!)), SecurityAlgorithms.HmacSha256);
@@ -97,7 +97,7 @@ namespace CoVoyageurAPI.Controllers
                 issuer: _appSettings.ValidIssuer,
                 audience: _appSettings.ValidAudience,
                 signingCredentials: signingCredentials,
-                expires: DateTime.Now.AddHours(2)
+                expires: DateTime.Now.AddHours(4)
                 );
 
             string token = new JwtSecurityTokenHandler().WriteToken(jwt);
@@ -112,13 +112,17 @@ namespace CoVoyageurAPI.Controllers
 
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> autoLogin([FromBody] string token)
-        //{
-        //    var handler = new JwtSecurityTokenHandler();
-        //    var jwt = handler.ReadJwtToken(token);
-            
-        //    var userToLog = await _userRepository.Get(u => u.Id == );
-        //}
+        [HttpGet]
+        public async Task<IActionResult> autoLogin([FromBody] string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwt = handler.ReadJwtToken(token);
+
+            int.TryParse(jwt.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value, out int UserId);
+
+            var userToLog = await _userRepository.Get(u => u.Id == UserId);
+
+            return Ok(userToLog);
+        }
     }
 }
