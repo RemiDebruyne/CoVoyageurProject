@@ -16,6 +16,7 @@ namespace CoVoyageurAPI.Extensions
 
         public static void AddAuthentication(this WebApplicationBuilder builder)
         {
+
             var appSettingSection = builder.Configuration.GetSection(nameof(AppSettings));
             builder.Services.Configure<AppSettings>(appSettingSection); // Lie les paramètres de configuration
             AppSettings appSettings = appSettingSection.Get<AppSettings>(); // Récupère les paramètres de configuration
