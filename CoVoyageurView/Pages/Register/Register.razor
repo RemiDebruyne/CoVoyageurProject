@@ -1,6 +1,7 @@
 ﻿@page "/register"
 @layout NoMenuLayout
-@inject IApiQueryService<User> service;
+@inject AuthenticationApiService service;
+@using CoVoyageurCore.DTOs
 @using CoVoyageurView.Services
 @using Helpers;
 @using System.ComponentModel.DataAnnotations
@@ -30,7 +31,7 @@ Phone
             </div>
             <div class="col-span-2">
                 <label for="email" class="font-semibold text-gray-600">Email</label>
-                <InputText id="email" @bind-Value="User.Email" class="input-register"></InputText>
+                <InputText type="email" id="email" @bind-Value="User.Email" class="input-register"></InputText>
             </div>
             <div class="col-span-2">
                 <label for="password" class="font-semibold text-gray-600">Password</label>
@@ -62,7 +63,7 @@ Phone
             </div>
             <div class="col-span-2 text-center">
                 <button type="submit" class="px-12 py-2 mt-4 bg-primary-500 font-bold text-white hover:bg-primary-700">Sign up</button>
-                <p class="text-red-500">@ErrorMessage</p>
+                <p class="text-red-500 mt-4">@ErrorMessage</p>
             </div>
         </EditForm>
     </div>
@@ -82,21 +83,37 @@ Phone
     [Inject]
     public NavigationManager Navigation { get; set; }
 
-    public async void HandleSubmit()
+    public async Task HandleSubmit()
     {
 
-        var success = await service.Post(User);
+        var success = await service.Register(User);
 
         if (!success)
         {
-            ErrorMessage = "Registering went wrong, please try agian";
+            ErrorMessage = "Registering went wrong, please try again";
         }
 
         if (success)
         {
-            ErrorMessage = "";
-            //This wont work as we do not have a way to get the user id yet
-            Navigation.NavigateTo("/register/profile/{id}");
+            var loginSuccess = await service.Login(new LoginRequestDTO
+                {
+                    Password = User.Password,
+                    Email = User.Email
+                });
+
+                
+
+            if (!loginSuccess)
+            {
+                ErrorMessage = "Login went wrong, please try again";
+            }
+
+            if (loginSuccess)
+            {
+                ErrorMessage = "";
+                Navigation.NavigateTo("/register/profile/");
+            }
+
         }
     }
 
