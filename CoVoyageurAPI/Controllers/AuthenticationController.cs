@@ -29,6 +29,8 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPost("register")]
+        //TODO Post not working on the api side, error is unable to convert Json into User. Most likely need a register DTO then map it to USer
+
         public async Task<IActionResult> Register([FromBody] User user)
         {
             if (await _userRepository.Get(u => u.Email == user.Email) != null)

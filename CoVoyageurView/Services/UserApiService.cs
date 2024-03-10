@@ -1,4 +1,5 @@
 ﻿using CoVoyageurCore.Models;
+using System.Net.Http;
 
 namespace CoVoyageurView.Services
 {
@@ -6,7 +7,7 @@ namespace CoVoyageurView.Services
     {
         public UserApiService(HttpClient httpClient) : base(httpClient)
         {
-            Controller = "User";
+            Controller = "Users";
         }
     }
 }

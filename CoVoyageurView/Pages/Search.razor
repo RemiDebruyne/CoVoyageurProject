@@ -1,5 +1,8 @@
 ﻿@page "/search"
+@using CoVoyageurView.Services
 @layout SearchLayout
+@inject IApiQueryService<Ride> service
+@inject HttpClient client;
 
 <div class="w-9/12">
     <div class="grid grid-cols-2">
@@ -21,11 +24,15 @@
 
 @code {
 
-    public List<Ride> Rides { get; set; } = new();
+    public List<Ride> Rides { get; set; }
 
     //Get list of ride from api
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        return base.OnInitializedAsync();
+        // var rideList = await service.GetAll();
+        // Rides = rideList.ToList();
+
+        var rideList = await client.GetFromJsonAsync<List<Ride>>("http://localhost:5199/api/Rides");
+        Rides = rideList.ToList();
     }
 }

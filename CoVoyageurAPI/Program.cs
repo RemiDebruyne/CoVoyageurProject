@@ -42,6 +42,7 @@ builder.Services.AddSwaggerGen(c =>
 
 
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
+builder.Services.AddScoped<IRepository<Ride>, RideRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.InjectDependencies();

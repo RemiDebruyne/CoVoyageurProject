@@ -7,7 +7,14 @@ namespace CoVoyageurAPI.Repositories
 {
     public class RideRepository : IRepository<Ride>
     {
-        private ApplicationDbContext _dbContext { get; }
+        private readonly ApplicationDbContext _dbContext;
+
+        public RideRepository(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+
 
         // CREATE
         public async Task<int> Add(Ride ride)
