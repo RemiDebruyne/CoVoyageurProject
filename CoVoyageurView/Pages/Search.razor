@@ -26,7 +26,7 @@
 
     public List<Ride> Rides { get; set; }
 
-    //Get list of ride from api
+    //TODO Not working because object not instaciated, most likely because the get all method doesnt include User and Rating which are recquired for the component to rend
     protected override async Task OnInitializedAsync()
     {
         // var rideList = await service.GetAll();
