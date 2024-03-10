@@ -1,0 +1,21 @@
+﻿<div class="absolute w-screen h-screen  bg-pink-500">
+    @ChildContent
+    <button onclick="CloseModal"</button>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnClose { get; set; }
+
+    private Task OpenModal()
+    {
+        return OnClose.InvokeAsync(true);
+    }
+    private Task CloseModal()
+    {
+        return OnClose.InvokeAsync(false);
+    }
+}
