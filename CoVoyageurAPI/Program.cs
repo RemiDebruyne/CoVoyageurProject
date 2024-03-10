@@ -1,4 +1,5 @@
 using CoVoyageurAPI.Datas;
+using CoVoyageurAPI.Extensions;
 using CoVoyageurAPI.Repositories;
 using CoVoyageurCore.Models;
 
@@ -12,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.InjectDependencies();
 
 var app = builder.Build();
 
