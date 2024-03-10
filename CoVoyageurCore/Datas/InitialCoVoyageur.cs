@@ -32,10 +32,10 @@ namespace CoVoyageurCore.Datas
 
         public static readonly List<Ride> rides = new List<Ride>()
         {
-            new Ride{ Id = 1, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 1, Arrival = "10h00",Departure = "9h00"},
-            new Ride{ Id = 2, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 2, Arrival = "10h00",Departure = "9h00"},
-            new Ride{ Id = 3, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 3, Arrival = "10h00",Departure = "9h00"},
-            new Ride{ Id = 4, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20.00M, AvailableSeats = 4, UserId = 4, Arrival = "10h00",Departure = "9h00"},
+            new Ride{ Id = 1, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20, AvailableSeats = 4, UserId = 1, Arrival = "10h00",Departure = "9h00"},
+            new Ride{ Id = 2, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20, AvailableSeats = 4, UserId = 2, Arrival = "10h00",Departure = "9h00"},
+            new Ride{ Id = 3, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20, AvailableSeats = 4, UserId = 3, Arrival = "10h00",Departure = "9h00"},
+            new Ride{ Id = 4, CreationDate = new DateTime(2000, 1, 1), RideDate = new DateTime(2000, 1, 1), Price = 20, AvailableSeats = 4, UserId = 4, Arrival = "10h00",Departure = "9h00"},
         };
 
         public static readonly List<Reservation> reservations = new List<Reservation>()
