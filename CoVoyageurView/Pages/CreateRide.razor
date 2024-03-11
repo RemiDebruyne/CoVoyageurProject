@@ -1,0 +1,69 @@
+﻿@page "/create-ride"
+@using CoVoyageurView.Services
+@inject IApiQueryService<Ride> service;
+@inject NavigationManager navigation;
+
+@*
+    userid
+    creation date
+    ride date
+    price
+    available seats
+    departure
+    arrival
+*@
+
+<EditForm Model="Ride" OnValidSubmit="HandleSubmit" class="flex flex-col justify-center">
+
+    <InputNumber id="userId" type="hidden" class="input-register" @bind-Value="Ride.UserId"></InputNumber>
+    <div>
+        <label for="creationDate"></label>
+        <InputDate id="creationDate" class="input-register" @bind-Value="Ride.CreationDate"></InputDate>
+    </div>
+    <div>
+        <label for="rideDate"></label>
+        <InputDate id="rideDate" class="input-register" @bind-Value="Ride.RideDate"></InputDate>
+    </div>
+    <div>
+        <label for="price"></label>
+        <InputNumber id="price" class="input-register" @bind-Value="Ride.Price"></InputNumber>
+    </div>
+    <div>
+        <label for="seats"></label>
+        <InputNumber id="seats" class="input-register" @bind-Value="Ride.AvailableSeats"></InputNumber>
+    </div>
+    <div>
+        <label for="departure"></label>
+        <InputDate id="departure" class="input-register" @bind-Value="Ride.Departure"></InputDate>
+    </div>
+    <div>
+        <label for="arrival"></label>
+        <InputDate id="arrival" class="input-register" @bind-Value="Ride.Arrival"></InputDate>
+    </div>
+    <button type="submit" ></button>
+    <p class="text-red-500 mt-4">@ErrorMessage</p>
+</EditForm>
+
+@code {
+
+    public Ride Ride { get; set; } = new();
+
+    public string ErrorMessage { get; set; }
+
+    public async void HandleSubmit()
+    {
+        var success = await service.Post(Ride);
+
+        if (!success)
+            ErrorMessage = "Something went wrong, please try again";
+
+        if (success)
+        {
+          
+        }
+        navigation.NavigateTo("/");
+
+    }
+
+
+}

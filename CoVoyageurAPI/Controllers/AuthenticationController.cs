@@ -1,5 +1,4 @@
-﻿using CoVoyageurAPI.DTOs;
-using CoVoyageurAPI.Helpers;
+﻿using CoVoyageurAPI.Helpers;
 using CoVoyageurCore.Models;
 using CoVoyageurAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using CoVoyageurCore.DTOs;
 
 namespace CoVoyageurAPI.Controllers
 {
@@ -25,7 +25,7 @@ namespace CoVoyageurAPI.Controllers
             _settings = appSettings.Value;
         }
 
-        [HttpPost("[action]")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] User user)
         {
             if (await _userRepository.Get(u => u.Email == user.Email) != null)
@@ -53,11 +53,12 @@ namespace CoVoyageurAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO login)
         {
-            login.PassWord = EncryptPassword(login.PassWord);
+            login.Password = EncryptPassword(login.Password);
 
-            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.PassWord);
+            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.Password);
 
-            if (user == null) return BadRequest("Invalid Authentication !");
+            if (user == null) 
+                return BadRequest("Invalid Authentication !");
 
             var role = user.IsAdmin ? "Admin" : "User";
 
@@ -98,7 +99,7 @@ namespace CoVoyageurAPI.Controllers
 
             var user = await _userRepository.Get(u => u.Email == email && u.PassWord == password);
 
-            if (user == null) return BadRequest("Invalid Authentication !");
+            if (user == null) return Unauthorized("Invalid Authentication !");
 
             var role = user.IsAdmin ? "Admin" : "User";
 
@@ -123,7 +124,7 @@ namespace CoVoyageurAPI.Controllers
 
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return Ok(new
+            return Ok(new LoginResponseDTO
             {
                 Token = token,
                 Message = "Valid Authentication !",
@@ -131,7 +132,21 @@ namespace CoVoyageurAPI.Controllers
             });
         }
 
-        // possible d'ajouter les actions de crud des users ici ou dans un controlleur UserController
+            // possible d'ajouter les actions de crud des users ici ou dans un controlleur UserController
+
+            [HttpPost]
+            public async Task<IActionResult> autoLogin([FromBody] string token)
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jwt = handler.ReadJwtToken(token);
+
+
+                int.TryParse(jwt.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value, out int UserId);
+
+                var user = await _userRepository.Get(u => u.Id == UserId);
+
+                return Ok(user);
+            }
 
         [NonAction]
         private string EncryptPassword(string? password)
@@ -140,5 +155,6 @@ namespace CoVoyageurAPI.Controllers
             if (string.IsNullOrEmpty(password)) return "";
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(password + _securityKey));
         }
+
     }
 }

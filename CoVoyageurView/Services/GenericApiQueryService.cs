@@ -6,7 +6,7 @@ namespace CoVoyageurView.Services
 {
     public class GenericApiQueryService<T> : IApiQueryService<T> where T : class
     {
-        private readonly HttpClient _httpClient;
+        protected readonly HttpClient _httpClient;
 
         protected const string _apiRoute = "http://localhost:5199/api/";
         protected virtual string Controller { get; set; }
@@ -41,7 +41,7 @@ namespace CoVoyageurView.Services
         {
             var result = await _httpClient.GetFromJsonAsync<List<T>>(_apiRoute + Controller);
 
-            return result;
+            return result.ToList();
         }
 
         public virtual async Task<bool> Post(T entity)
