@@ -3,6 +3,7 @@
 @using static CoVoyageurCore.Models.Profile
 @layout NoMenuLayout
 @inject IApiQueryService<Profile> service;
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject NavigationManager Navigation
 <PageTitle>Profile</PageTitle>
 
@@ -48,24 +49,16 @@
 
 
 @code {
-    [Parameter]
+    [CascadingParameter]
     public User User { get; set; }
+    [CascadingParameter]
     public Profile Profile { get; set; } = new();
+
     public string ErrorMessage { get; set; }
 
     public bool Music { get; set; }
     public bool Tabaco { get; set; }
     public bool Animal { get; set; }
-
-
-
-
-
-    //TODO Get the user from her
-    protected override Task OnInitializedAsync()
-    {
-        return base.OnInitializedAsync();
-    }
 
     public async void HandleSubmit()
     {
@@ -77,6 +70,7 @@
         if (success)
         {
             ErrorMessage = "";
+            localStorage.SetItemAsync("Profile", Profile);
             Navigation.NavigateTo("/register/profile/car");
 
         }

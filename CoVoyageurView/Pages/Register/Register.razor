@@ -1,19 +1,11 @@
 ﻿@page "/register"
 @layout NoMenuLayout
 @inject AuthenticationApiService service;
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 @using CoVoyageurCore.DTOs
 @using CoVoyageurView.Services
 @using Helpers;
 @using System.ComponentModel.DataAnnotations
-@* FirstName
-LastName
-Email
-Password
-BirthDate
-Gender
-Phone
-*@
-
 
 <div class="flex w-8/12 h-4/5 rounded-2xl bg-white overflow-hidden">
     <div class="bg-[url('/images/pink-stairs.jpg')] bg-cover bg-center w-[40%]">
@@ -94,21 +86,24 @@ Phone
 
         if (success)
         {
-            var loginSuccess = await service.Login(new LoginRequestDTO
+
+            // await localStorage.SetItemAsync();
+            var loginResponse = await service.Login(new LoginRequestDTO
                 {
                     Password = User.Password,
                     Email = User.Email
                 });
 
-                
 
-            if (!loginSuccess)
+
+            if (loginResponse == null)
             {
                 ErrorMessage = "Login went wrong, please try again";
             }
 
-            if (loginSuccess)
+            if (loginResponse != null)
             {
+                localStorage.SetItemAsync("token", loginResponse.Token);
                 ErrorMessage = "";
                 Navigation.NavigateTo("/register/profile/");
             }

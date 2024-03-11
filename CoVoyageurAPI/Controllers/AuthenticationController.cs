@@ -44,33 +44,8 @@ namespace CoVoyageurAPI.Controllers
             if (addedUser == null)
                 return BadRequest("Something went wrong");
 
-            var role = user.IsAdmin ? Constants.RoleAdmin : Constants.RoleUser;
-
-            List<Claim> claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Role, role),
-                new Claim("Userid", user.Id.ToString()),
-            };
-
-            SigningCredentials signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_appSettings.SecretKey!)), SecurityAlgorithms.HmacSha256);
-
-            JwtSecurityToken jwt = new JwtSecurityToken(
-                claims: claims,
-                issuer: _appSettings.ValidIssuer,
-                audience: _appSettings.ValidAudience,
-                signingCredentials: signingCredentials,
-                expires: DateTime.Now.AddHours(2)
-                );
-
-            string token = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-            return CreatedAtAction(nameof(UsersController.Get),
-                                    new
-                                    {
-                                        Token = token,
-                                        Message = "User successfuly registered",
-                                        User = addedUser
-                                    });
+            return CreatedAtAction(nameof(UsersController.Get), new { id = addedUser });
+  
 
         }
 
@@ -104,7 +79,7 @@ namespace CoVoyageurAPI.Controllers
 
             string token = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return Ok(new
+            return Ok(new LoginResponseDTO
             {
                 Token = token,
                 Message = "User successfuly registered",
@@ -114,17 +89,18 @@ namespace CoVoyageurAPI.Controllers
 
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> autoLogin([FromBody] string token)
         {
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
+            
 
             int.TryParse(jwt.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value, out int UserId);
 
-            var userToLog = await _userRepository.Get(u => u.Id == UserId);
+            var user = await _userRepository.Get(u => u.Id == UserId);
 
-            return Ok(userToLog);
+            return Ok(user);
         }
     }
 }

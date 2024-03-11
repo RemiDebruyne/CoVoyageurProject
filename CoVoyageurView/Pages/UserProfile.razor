@@ -2,23 +2,16 @@
 @using CoVoyageurView.Services
 @using static CoVoyageurCore.Models.Profile
 @inject IApiQueryService<Profile> service
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 
-<div class="w-10/12">
-    <div>
-        <p>@User.FirstName</p>
-        <img src="/images/Avatar.svg" />
-    </div>
-    <h2>
-        About you
-    </h2>
-    @* Add dialogue component for bio*@
-    <button onclick="() => OpenDialogue()">Change your preferences</button>
 
+@if (IsDialogueVisible)
+{
+    
         <Dialogue OnClose="@CloseDialogue">
-            <h2>Preferences</h2>
+            <h2 class="text-4xl font-bold text-primary-500 my-8">Preferences</h2>
             <EditForm Model="Profile" OnValidSubmit="HandleSubmit">
-                <InputNumber type="hidden" @bind-Value="Profile.Id"/>
                 <div>
                     <InputCheckbox id="music" @bind-Value="Music" @onchange="() => AddPreference(Preference.Tabac, Music)"></InputCheckbox>
                     <label for="music">I like music</label>
@@ -32,22 +25,40 @@
                     <label for="animal">I'm fine with people having animals in the car</label>
                 </div>
                 <button type="submit" class="btn">Save</button>
+                <button type="button" @onclick="CloseDialogue" class="btn">Close</button>
             </EditForm>
         </Dialogue>
 
+}
 
-
+<div class="flex justify-center w-10/12">
+    <div class="flex gap-4">
+        <p>@User.FirstName</p>
+        <img src="/images/Avatar.svg" />
+    </div>
+    <p class="text-green-500">@SuccessMessage</p>
+    <h2>
+        About you
+    </h2>
+    @* Add dialogue component for bio*@
+    <button type="button" @onclick="OpenDialogue" class="btn">Change your preferences</button>
+    <p class="text-red-primary mt-4">@ErrorMessage</p>
 </div>
 @code {
-    public User User { get; set; } = new();
+    [CascadingParameter]
+    public User User { get; set; }
+    [CascadingParameter]
+    public Profile Profile { get; set; }
 
-    public Profile Profile { get; set; } = new();
+    public string ErrorMessage { get; set; }
+    public string SuccessMessage { get; set; }
 
     public bool Music { get; set; }
     public bool Tabaco { get; set; }
     public bool Animal { get; set; }
 
-    public bool IsDialogueVisible { get; set; }
+    #region Dialogue Modal
+    public bool IsDialogueVisible { get; set; } = true;
 
     public void CloseDialogue()
     {
@@ -57,9 +68,11 @@
 
     public void OpenDialogue()
     {
-        IsDialogueVisible = false;
+        IsDialogueVisible = true;
         StateHasChanged();
     }
+
+    #endregion
 
     public void AddPreference(Preference preference, bool value)
     {
@@ -72,5 +85,20 @@
     public async Task HandleSubmit()
     {
         var success = await service.Update(Profile, Profile.Id);
+
+        if (!success)
+        {
+            SuccessMessage = "";
+            ErrorMessage = "Somethinbg went wrong, please try again";
+        }
+
+        if (success)
+        {
+            ErrorMessage = "";
+            CloseDialogue();
+            SuccessMessage = "Your preferences were saved successfully";
+            localStorage.SetItemAsync("Profile", Profile);
+
+        }
     }
 }
