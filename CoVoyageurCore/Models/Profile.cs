@@ -37,9 +37,5 @@ namespace CoVoyageurCore.Models
             Tabac,
             Animaux
         }
-
-      //  public ICollection<User> Users { get; set; }
-
-
     }
 }
