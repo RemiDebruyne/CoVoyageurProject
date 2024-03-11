@@ -28,6 +28,7 @@ namespace CoVoyageurCore.Models
 
         [Column("email")]
         [Required]
+        [RegularExpression(@"^[\w-\.]+@([\w -]+\.)+[\w-]{2,4}$")]
         public string? Email { get; set; }
 
         [Column("phone")]
@@ -51,7 +52,7 @@ namespace CoVoyageurCore.Models
 
         public bool IsAdmin { get; set; } = false;
         public Rating? UserRating { get; set; }
-        public Profile Profile { get; set; }
+        public Profile? Profile { get; set; }
 
         public List<Rating> RatedRatings { get; set; } = new();
         public List<Rating> RatingRatings { get; set; } = new();
