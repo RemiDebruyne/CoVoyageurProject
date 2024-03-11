@@ -8,7 +8,6 @@ namespace CoVoyageurAPI.Repositories
     public class RatingRepository : IRepository<Rating>
     {
         private ApplicationDbContext _dbContext { get; }
-
         public RatingRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -27,17 +26,14 @@ namespace CoVoyageurAPI.Repositories
         {
             return await _dbContext.Ratings.FindAsync(id);
         }
-
         public async Task<Rating?> Get(Expression<Func<Rating, bool>> predicate)
         {
             return await _dbContext.Ratings.FirstOrDefaultAsync(predicate);
         }
-
-        public Task<List<Rating>> GetAll()
+        public async Task<List<Rating>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Ratings.ToListAsync();
         }
-
         public async Task<List<Rating>> GetAll(Expression<Func<Rating, bool>> predicate)
         {
             return await _dbContext.Ratings.Where(predicate).ToListAsync();
@@ -53,12 +49,10 @@ namespace CoVoyageurAPI.Repositories
 
             if (ratingFromDb.RideId != rating.RideId)
                 ratingFromDb.RideId = rating.RideId;
-            if (ratingFromDb.Ride != rating.Ride)
-                ratingFromDb.Ride = rating.Ride;
-            if (ratingFromDb.RatedUserId != rating.RatedUserId)
-                ratingFromDb.RatedUserId = rating.RatedUserId;
             if (ratingFromDb.RatingUserId != rating.RatingUserId)
                 ratingFromDb.RatingUserId = rating.RatingUserId;
+            if (ratingFromDb.RatedUserId != rating.RatedUserId)
+                ratingFromDb.RatedUserId = rating.RatedUserId;
             if (ratingFromDb.Score != rating.Score)
                 ratingFromDb.Score = rating.Score;
             if (ratingFromDb.Comment != rating.Comment)

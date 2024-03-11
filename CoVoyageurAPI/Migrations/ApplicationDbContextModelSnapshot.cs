@@ -411,7 +411,7 @@ namespace CoVoyageurAPI.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("lastname");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PassWord")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("password");
@@ -440,7 +440,7 @@ namespace CoVoyageurAPI.Migrations
                             Gender = "M",
                             IsAdmin = false,
                             LastName = "Callet",
-                            Password = "pswd",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         },
                         new
@@ -452,7 +452,7 @@ namespace CoVoyageurAPI.Migrations
                             Gender = "M",
                             IsAdmin = false,
                             LastName = "Mao",
-                            Password = "pswd",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         },
                         new
@@ -464,7 +464,7 @@ namespace CoVoyageurAPI.Migrations
                             Gender = "M",
                             IsAdmin = false,
                             LastName = "Debruyne",
-                            Password = "pswd",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         },
                         new
@@ -476,7 +476,7 @@ namespace CoVoyageurAPI.Migrations
                             Gender = "M",
                             IsAdmin = false,
                             LastName = "Inan",
-                            Password = "pswd",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         });
                 });
@@ -585,8 +585,7 @@ namespace CoVoyageurAPI.Migrations
 
             modelBuilder.Entity("CoVoyageurCore.Models.User", b =>
                 {
-                    b.Navigation("Profile")
-                        .IsRequired();
+                    b.Navigation("Profile");
 
                     b.Navigation("RatedRatings");
 

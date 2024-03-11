@@ -7,9 +7,8 @@ namespace CoVoyageurAPI.Repositories
 {
     public class UserRepository : IRepository<User>
     {
-        private ApplicationDbContext _dbContext {  get; }
-
-        public UserRepository(ApplicationDbContext dbContext) 
+        private ApplicationDbContext _dbContext { get; }
+        public UserRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -27,17 +26,14 @@ namespace CoVoyageurAPI.Repositories
         {
             return await _dbContext.Users.FindAsync(id);
         }
-
         public async Task<User?> Get(Expression<Func<User, bool>> predicate)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(predicate);
         }
-
-        public Task<List<User>> GetAll()
+        public async Task<List<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Users.ToListAsync();
         }
-
         public async Task<List<User>> GetAll(Expression<Func<User, bool>> predicate)
         {
             return await _dbContext.Users.Where(predicate).ToListAsync();
@@ -59,14 +55,18 @@ namespace CoVoyageurAPI.Repositories
                 userFromDb.Email = user.Email;
             if (userFromDb.Phone != user.Phone)
                 userFromDb.Phone = user.Phone;
+            if (userFromDb.PassWord != user.PassWord)
+                userFromDb.PassWord = user.PassWord;
             if (userFromDb.BirthDate != user.BirthDate)
                 userFromDb.BirthDate = user.BirthDate;
-            if (userFromDb.Password != user.Password)
-                userFromDb.Password = user.Password;
             if (userFromDb.Gender != user.Gender)
                 userFromDb.Gender = user.Gender;
             if (userFromDb.IsAdmin != user.IsAdmin)
                 userFromDb.IsAdmin = user.IsAdmin;
+            if (userFromDb.RatedRatings != user.RatedRatings)
+                userFromDb.RatedRatings = user.RatedRatings;
+            if (userFromDb.RatingRatings != user.RatingRatings)
+                userFromDb.RatingRatings = user.RatingRatings;
 
             return await _dbContext.SaveChangesAsync() > 0;
         }
