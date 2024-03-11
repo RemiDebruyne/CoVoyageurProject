@@ -1,5 +1,4 @@
-﻿using CoVoyageurAPI.DTOs;
-using CoVoyageurAPI.Helpers;
+﻿using CoVoyageurAPI.Helpers;
 using CoVoyageurCore.Models;
 using CoVoyageurAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using CoVoyageurCore.DTOs;
 
 namespace CoVoyageurAPI.Controllers
 {
@@ -53,9 +53,9 @@ namespace CoVoyageurAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO login)
         {
-            login.PassWord = EncryptPassword(login.PassWord);
+            login.Password = EncryptPassword(login.Password);
 
-            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.PassWord);
+            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.Password);
 
             if (user == null) 
                 return BadRequest("Invalid Authentication !");

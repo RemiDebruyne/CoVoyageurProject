@@ -2,6 +2,7 @@
 @layout NoMenuLayout
 @inject AuthenticationApiService service;
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject HttpClient client
 @using CoVoyageurCore.DTOs
 @using CoVoyageurView.Services
 @using Helpers;
@@ -13,6 +14,10 @@
     <div class="flex flex-col w-[60%]">
         <h1 class="text-center text-4xl mt-10 mb-8 text-primary-500 font-bold">Welcome aboard !</h1>
         <EditForm Model="User" OnValidSubmit="@HandleSubmit" class="self-center grid grid-cols-2 grid-rows-[1fr_1fr_1r_1fr_1fr_1fr] gap-x-4 gap-y-2  w-[45%]">
+            <DataAnnotationsValidator />
+            <div class="text-red-500">
+                <ValidationSummary />
+            </div>
             <div>
                 <label for="firstname" class="font-semibold text-gray-600">Firstname</label>
                 <InputText id="firstname" @bind-Value="User.FirstName" class="input-register"></InputText>
@@ -27,10 +32,10 @@
             </div>
             <div class="col-span-2">
                 <label for="password" class="font-semibold text-gray-600">Password</label>
-                <InputText id="password" type="password" @bind-Value="User.Password" class="input-register"></InputText>
+                <InputText id="password" type="password" @bind-Value="User.PassWord" class="input-register"></InputText>
 
             </div>
-            <div class="col-span-2">
+@*             <div class="col-span-2">
                 <label for="passwordCheck" class="font-semibold text-gray-600">Verify your password</label>
                 <InputText id="passwordCheck" type="password" @bind-Value="PasswordCheck" @onblur="PasswordValidation" class="input-register group-invalid:"></InputText>
                 @if (!PasswordIsValid)
@@ -38,6 +43,10 @@
                     <small class="text-red-500">Passwords do not match. Please try again.</small>
                 }
 
+            </div> *@
+            <div class="col-span-2">
+                <label for="phone" class="font-semibold text-gray-600">Phone Number</label>
+                <InputText type="phone" max-length="10" id="phone" @bind-Value="User.Phone" class="input-register"></InputText>
             </div>
             <div>
                 <label for="birthdate" class="font-semibold text-gray-600">Birthdate</label>
@@ -47,10 +56,10 @@
             <div>
                 <label for="gender" class="font-semibold text-gray-600">Gender</label>
                 <InputSelect id="gender" @bind-Value="User.Gender" class="input-register">
-                    Select a gender
-                    <option value="@User.Gender">M</option>
-                    <option value="@User.Gender">F</option>
-                    <option value="@User.Gender">Other</option>
+                    <option value="#">Select a gender</option>
+                    <option value="M">M</option>
+                    <option value="F">F</option>
+                    <option value="N">N</option>
                 </InputSelect>
             </div>
             <div class="col-span-2 text-center">
@@ -78,19 +87,28 @@
     public async Task HandleSubmit()
     {
         var success = await service.Register(User);
-
-        if (!success)
+        // var success = await client.PostAsJsonAsync("http://localhost:5199/api/Authentication/register", User);
+        if ((int)success.StatusCode >= 400 && (int)success.StatusCode <=499)
         {
-            ErrorMessage = "Registering went wrong, please try again";
+            ErrorMessage =  "Bad request";
+
         }
 
-        if (success)
+        if ((int)success.StatusCode >= 500 && (int)success.StatusCode <= 599)
         {
+            ErrorMessage =  "Our servers are encountering some issues, please try again later";
 
-            // await localStorage.SetItemAsync();
+        }
+
+        if ((int)success.StatusCode >= 200 && (int)success.StatusCode <= 299);
+        {
+            ErrorMessage = "Register successfull";
+            Navigation.NavigateTo("/register/profile/");
+    
+
             var loginResponse = await service.Login(new LoginRequestDTO
                 {
-                    Password = User.Password,
+                    Password = User.PassWord,
                     Email = User.Email
                 });
 
@@ -109,6 +127,7 @@
             }
 
         }
+
     }
 
     #region PasswordValidation
@@ -121,7 +140,7 @@
     public void PasswordValidation()
     {
         PasswordIsValid = true;
-        if (User.Password != PasswordCheck)
+        if (User.PassWord != PasswordCheck)
         {
             PasswordCheck = "";
             PasswordIsValid = false;

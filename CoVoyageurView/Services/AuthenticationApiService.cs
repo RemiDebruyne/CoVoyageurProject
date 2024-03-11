@@ -8,15 +8,15 @@ namespace CoVoyageurView.Services
     {
         public AuthenticationApiService(HttpClient httpClient) : base(httpClient)
         {
-            Controller = "Authentications";
+            Controller = "Authentication";
         }
 
-        public async Task<bool> Register(User user)
+        public async Task<HttpResponseMessage> Register(User user)
         {
             var result = await _httpClient.PostAsJsonAsync(_apiRoute + Controller + "/register", user);
+            
 
-
-            return result.IsSuccessStatusCode;
+            return result;
         }
 
         public async Task<LoginResponseDTO?> Login(LoginRequestDTO loginRequest)
