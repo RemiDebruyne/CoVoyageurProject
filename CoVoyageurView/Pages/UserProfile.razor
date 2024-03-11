@@ -1,0 +1,76 @@
+﻿@page "/user-profile"
+@using CoVoyageurView.Services
+@using static CoVoyageurCore.Models.Profile
+@inject IApiQueryService<Profile> service
+
+
+<div class="w-10/12">
+    <div>
+        <p>@User.FirstName</p>
+        <img src="/images/Avatar.svg" />
+    </div>
+    <h2>
+        About you
+    </h2>
+    @* Add dialogue component for bio*@
+    <button onclick="() => OpenDialogue()">Change your preferences</button>
+
+        <Dialogue OnClose="@CloseDialogue">
+            <h2>Preferences</h2>
+            <EditForm Model="Profile" OnValidSubmit="HandleSubmit">
+                <InputNumber type="hidden" @bind-Value="Profile.Id"/>
+                <div>
+                    <InputCheckbox id="music" @bind-Value="Music" @onchange="() => AddPreference(Preference.Tabac, Music)"></InputCheckbox>
+                    <label for="music">I like music</label>
+                </div>
+                <div>
+                    <InputCheckbox id="tabaco" @bind-Value="Tabaco" @onchange="() => AddPreference(Preference.Tabac, Tabaco)"></InputCheckbox>
+                    <label for="tabaco">I'm fine with people smoking a cigarette</label>
+                </div>
+                <div>
+                    <InputCheckbox id="animal" @bind-Value="Animal" @onchange="() => AddPreference(Preference.Animaux, Animal)"></InputCheckbox>
+                    <label for="animal">I'm fine with people having animals in the car</label>
+                </div>
+                <button type="submit" class="btn">Save</button>
+            </EditForm>
+        </Dialogue>
+
+
+
+</div>
+@code {
+    public User User { get; set; } = new();
+
+    public Profile Profile { get; set; } = new();
+
+    public bool Music { get; set; }
+    public bool Tabaco { get; set; }
+    public bool Animal { get; set; }
+
+    public bool IsDialogueVisible { get; set; }
+
+    public void CloseDialogue()
+    {
+        IsDialogueVisible = false;
+        StateHasChanged();
+    }
+
+    public void OpenDialogue()
+    {
+        IsDialogueVisible = false;
+        StateHasChanged();
+    }
+
+    public void AddPreference(Preference preference, bool value)
+    {
+        if (value)
+            Profile.Preferences.Add(preference);
+        else
+            Profile.Preferences.Remove(preference);
+    }
+
+    public async Task HandleSubmit()
+    {
+        var success = await service.Update(Profile, Profile.Id);
+    }
+}

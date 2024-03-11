@@ -7,7 +7,7 @@ namespace CoVoyageurAPI.Repositories
 {
     public class UserRepository : IRepository<User>
     {
-        private ApplicationDbContext _dbContext {  get; }
+        private readonly ApplicationDbContext _dbContext;
 
         public UserRepository(ApplicationDbContext dbContext) 
         {
@@ -33,9 +33,9 @@ namespace CoVoyageurAPI.Repositories
             return await _dbContext.Users.FirstOrDefaultAsync(predicate);
         }
 
-        public Task<List<User>> GetAll()
+        public async Task<List<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.Users.ToList();
         }
 
         public async Task<List<User>> GetAll(Expression<Func<User, bool>> predicate)
@@ -59,14 +59,21 @@ namespace CoVoyageurAPI.Repositories
                 userFromDb.Email = user.Email;
             if (userFromDb.Phone != user.Phone)
                 userFromDb.Phone = user.Phone;
-            if (userFromDb.BirthDate != user.BirthDate)
-                userFromDb.BirthDate = user.BirthDate;
             if (userFromDb.Password != user.Password)
                 userFromDb.Password = user.Password;
+            if (userFromDb.BirthDate != user.BirthDate)
+                userFromDb.BirthDate = user.BirthDate;
             if (userFromDb.Gender != user.Gender)
                 userFromDb.Gender = user.Gender;
-            if (userFromDb.IsAdmin != user.IsAdmin)
-                userFromDb.IsAdmin = user.IsAdmin;
+            if (userFromDb.UserRating != user.UserRating)
+                userFromDb.UserRating = user.UserRating;
+            if (userFromDb.RatedRatings != user.RatedRatings)
+                userFromDb.RatedRatings = user.RatedRatings;
+            if (userFromDb.RatingRatings != user.RatingRatings)
+                userFromDb.RatingRatings = user.RatingRatings;
+            //Un user peut devenir admin ?
+            //if (userFromDb.IsAdmin != user.IsAdmin)
+            //    userFromDb.IsAdmin = user.IsAdmin;
 
             return await _dbContext.SaveChangesAsync() > 0;
         }

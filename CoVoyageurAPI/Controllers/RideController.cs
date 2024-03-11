@@ -9,9 +9,9 @@ namespace CoVoyageurCore.Controllers
     [ApiController]
     public class RidesController : ControllerBase
     {
-        private readonly RideRepository _repository;
+        private readonly IRepository<Ride> _repository;
 
-        public RidesController(RideRepository repository)
+        public RidesController(IRepository<Ride> repository)
         {
             _repository = repository;
         }
