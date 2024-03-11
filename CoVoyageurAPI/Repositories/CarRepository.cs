@@ -1,19 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CoVoyageurAPI.Datas;
+﻿using CoVoyageurAPI.Datas;
 using CoVoyageurCore.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System;
 
 namespace CoVoyageurAPI.Repositories
 {
     public class CarRepository : IRepository<Car>
     {
-        private ApplicationDbContext _dbContext { get; set; }
+        private ApplicationDbContext _dbContext { get; }
         public CarRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
+        // CREATE
         public async Task<int> Add(Car car)
         {
             var addedObj = await _dbContext.Cars.AddAsync(car);
@@ -21,27 +21,25 @@ namespace CoVoyageurAPI.Repositories
             return addedObj.Entity.Id;
         }
 
+        // READ
         public async Task<Car?> GetById(int id)
         {
             return await _dbContext.Cars.FindAsync(id);
         }
-
         public async Task<Car?> Get(Expression<Func<Car, bool>> predicate)
         {
             return await _dbContext.Cars.FirstOrDefaultAsync(predicate);
         }
-
         public async Task<List<Car>> GetAll()
         {
             return await _dbContext.Cars.ToListAsync();
         }
-
-
         public async Task<List<Car>> GetAll(Expression<Func<Car, bool>> predicate)
         {
             return await _dbContext.Cars.Where(predicate).ToListAsync();
         }
 
+        // UPDATE
         public async Task<bool> Update(Car car)
         {
             var carFromDb = await GetById(car.Id);
@@ -57,15 +55,13 @@ namespace CoVoyageurAPI.Repositories
                 carFromDb.Brand = car.Brand;
             if (carFromDb.UserId != car.UserId)
                 carFromDb.UserId = car.UserId;
-            if (carFromDb.User != car.User)
-                carFromDb.User = car.User;
             if (carFromDb.Color != car.Color)
                 carFromDb.Color = car.Color;
-
 
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
+        // DELETE
         public async Task<bool> Delete(int id)
         {
             var car = await GetById(id);

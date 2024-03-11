@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace CoVoyageurCore.Models
 {
@@ -36,7 +31,7 @@ namespace CoVoyageurCore.Models
 
         [Column("password")]
         [Required]
-        public string? Password { get; set; }
+        public string? PassWord { get; set; }
 
         [Column("birth_date")]
         [Required]

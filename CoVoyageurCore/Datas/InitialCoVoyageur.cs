@@ -1,6 +1,4 @@
 ﻿using CoVoyageurCore.Models;
-using System.Numerics;
-using System.Reflection;
 
 namespace CoVoyageurCore.Datas
 {
@@ -8,15 +6,15 @@ namespace CoVoyageurCore.Datas
     {
         public static readonly List<User> users = new List<User>()
         {
-            new User{ Id = 1, FirstName ="Kevin", LastName = "Callet", Email = "kevin@mail.com", Phone="0102030405", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
-            new User{ Id = 2, FirstName ="Massima", LastName = "Mao", Email = "massimo@mail.com", Phone="0102030405", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
-            new User{ Id = 3, FirstName ="Rémi", LastName = "Debruyne", Email = "remi@mail.com", Phone="0102030405", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
-            new User{ Id = 4, FirstName ="Aguit", LastName = "Inan", Email = "aguit@mail.com", Phone="0102030405", Password = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
+            new User{ Id = 1, FirstName ="Kevin", LastName = "Callet", Email = "kevin@mail.com", Phone="0102030405", PassWord = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
+            new User{ Id = 2, FirstName ="Massima", LastName = "Mao", Email = "massimo@mail.com", Phone="0102030405", PassWord = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
+            new User{ Id = 3, FirstName ="Rémi", LastName = "Debruyne", Email = "remi@mail.com", Phone="0102030405", PassWord = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
+            new User{ Id = 4, FirstName ="Aguit", LastName = "Inan", Email = "aguit@mail.com", Phone="0102030405", PassWord = "pswd", BirthDate = new DateTime(2000, 1, 1), Gender = "M", IsAdmin = false },
         };
 
         public static readonly List<Profile> profiles = new List<Profile>()
         {
-            new Profile{ Id = 1, Rating = 5, Review = "¨Parfait", Preferences = new() {Profile.Preference.Animaux }, UserId = 1},
+            new Profile{ Id = 1, Rating = 5, Review = "Parfait", Preferences = new() {Profile.Preference.Animaux }, UserId = 1},
             new Profile{ Id = 2, Rating = 4, Review = "Bien", Preferences = new() { Profile.Preference.Tabac }, UserId = 2},
             new Profile{ Id = 3, Rating = 3, Review = "Moyen", Preferences = new() { Profile.Preference.Musique }, UserId = 3},
             new Profile{ Id = 4, Rating = 2, Review = "Mauvais", Preferences = new() { Profile.Preference.Animaux }, UserId = 4},
@@ -45,27 +43,27 @@ namespace CoVoyageurCore.Datas
         };
 
         public static readonly List<Rating> ratings = new List<Rating>()
-{
-    new Rating
-    {
-        Id = 1,
-        RideId = 1,
-        RatingUserId = 1,
-        RatedUserId = 1,
-        Score = 5,
-        Comment = "Good",
-        RatingDate = new DateTime(2000, 1, 1)
-    },
-    new Rating
-    {
-        Id = 2,
-        RideId = 2,
-        RatingUserId = 2,
-        RatedUserId = 2,
-        Score = 2,
-        Comment = "Bad",
-        RatingDate = new DateTime(2000, 1, 1)
-    }
-};
+        {
+            new Rating
+            {
+                Id = 1,
+                RideId = 1,
+                RatingUserId = 1,
+                RatedUserId = 1,
+                Score = 5,
+                Comment = "Good",
+                RatingDate = new DateTime(2000, 1, 1)
+            },
+            new Rating
+            {
+                Id = 2,
+                RideId = 2,
+                RatingUserId = 2,
+                RatedUserId = 2,
+                Score = 2,
+                Comment = "Bad",
+                RatingDate = new DateTime(2000, 1, 1)
+            }
+        };
     }
 }

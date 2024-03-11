@@ -1,5 +1,4 @@
-﻿using CoVoyageurCore.Models;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoVoyageurCore.Models
 {
@@ -30,7 +29,7 @@ namespace CoVoyageurCore.Models
         [Column("arrival")]
         public string Arrival { get; set; }
 
-        public User User { get; set; }   
+        public User User { get; set; }
         public ICollection<Rating> Ratings { get; set; }
     }
 }

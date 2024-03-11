@@ -1,5 +1,4 @@
-﻿using CoVoyageurCore.Models;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoVoyageurCore.Models
 {

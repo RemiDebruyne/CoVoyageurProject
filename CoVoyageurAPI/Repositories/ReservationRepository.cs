@@ -8,7 +8,6 @@ namespace CoVoyageurAPI.Repositories
     public class ReservationRepository : IRepository<Reservation>
     {
         private ApplicationDbContext _dbContext { get; }
-
         public ReservationRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -50,8 +49,6 @@ namespace CoVoyageurAPI.Repositories
 
             if (reservationFromDb.UserId != reservation.UserId)
                 reservationFromDb.UserId = reservation.UserId;
-            if (reservationFromDb.User != reservation.User)
-                reservationFromDb.User = reservation.User;
             if (reservationFromDb.RideId != reservation.RideId)
                 reservationFromDb.RideId = reservation.RideId;
             if (reservationFromDb.Ride != reservation.Ride)

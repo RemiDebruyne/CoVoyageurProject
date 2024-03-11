@@ -50,6 +50,8 @@ namespace CoVoyageurAPI.Repositories
             if (rideFromDb == null)
                 return false;
 
+            if (rideFromDb.UserId != ride.UserId)
+                rideFromDb.UserId = ride.UserId;
             if (rideFromDb.CreationDate != ride.CreationDate)
                 rideFromDb.CreationDate = ride.CreationDate;
             if (rideFromDb.RideDate != ride.RideDate)
@@ -58,11 +60,13 @@ namespace CoVoyageurAPI.Repositories
                 rideFromDb.Price = ride.Price;
             if (rideFromDb.AvailableSeats != ride.AvailableSeats)
                 rideFromDb.AvailableSeats = ride.AvailableSeats;
-            if (rideFromDb.UserId != ride.UserId)
-                rideFromDb.UserId = ride.UserId;
-            if (rideFromDb.User != ride.User)
-                rideFromDb.User = ride.User;
-         
+            if (rideFromDb.Departure != ride.Departure)
+                rideFromDb.Departure = ride.Departure;
+            if (rideFromDb.Arrival != ride.Arrival)
+                rideFromDb.Arrival = ride.Arrival;
+            if (rideFromDb.Ratings != ride.Ratings)
+                rideFromDb.Ratings = ride.Ratings;
+
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
@@ -77,4 +81,3 @@ namespace CoVoyageurAPI.Repositories
         }
     }
 }
-

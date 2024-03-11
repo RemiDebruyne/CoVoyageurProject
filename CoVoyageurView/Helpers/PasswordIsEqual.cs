@@ -8,7 +8,6 @@ namespace CoVoyageurView.Helpers
         public User User { get; set; }
         public PasswordIsEqual(User user)
         {
-
             User = user;
         }
         public override bool IsValid(object? value)

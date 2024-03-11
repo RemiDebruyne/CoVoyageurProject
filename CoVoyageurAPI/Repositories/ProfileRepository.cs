@@ -3,13 +3,11 @@ using CoVoyageurCore.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-
 namespace CoVoyageurAPI.Repositories
 {
     public class ProfileRepository : IRepository<Profile>
     {
         private ApplicationDbContext _dbContext { get; }
-
         public ProfileRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -28,43 +26,37 @@ namespace CoVoyageurAPI.Repositories
         {
             return await _dbContext.Profiles.FindAsync(id);
         }
-
         public async Task<Profile?> Get(Expression<Func<Profile, bool>> predicate)
         {
             return await _dbContext.Profiles.FirstOrDefaultAsync(predicate);
         }
-
-        public Task<List<Profile>> GetAll()
+        public async Task<List<Profile>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Profiles.ToListAsync();
         }
-
         public async Task<List<Profile>> GetAll(Expression<Func<Profile, bool>> predicate)
         {
             return await _dbContext.Profiles.Where(predicate).ToListAsync();
         }
 
         // UPDATE
-        public async Task<bool> Update(Profile Profile)
+        public async Task<bool> Update(Profile profile)
         {
-            var ProfileFromDb = await GetById(Profile.Id);
+            var profileFromDb = await GetById(profile.Id);
 
-            if (ProfileFromDb == null)
+            if (profileFromDb == null)
                 return false;
 
-            if (ProfileFromDb.Rating != Profile.Rating)
-                ProfileFromDb.Rating = Profile.Rating;
-            if (ProfileFromDb.Review != Profile.Review)
-                ProfileFromDb.Review = Profile.Review;
-            if (ProfileFromDb.UserId != Profile.UserId)
-                ProfileFromDb.UserId = Profile.UserId;
-            if (ProfileFromDb.User != Profile.User)
-                ProfileFromDb.User = Profile.User;
-            if (ProfileFromDb.Cars != Profile.Cars)
-                ProfileFromDb.Cars = Profile.Cars;
-            if (ProfileFromDb.Preferences != Profile.Preferences)
-                ProfileFromDb.Preferences = Profile.Preferences;
-        
+            if (profileFromDb.Rating != profile.Rating)
+                profileFromDb.Rating = profile.Rating;
+            if (profileFromDb.Review != profile.Review)
+                profileFromDb.Review = profile.Review;
+            if (profileFromDb.UserId != profile.UserId)
+                profileFromDb.UserId = profile.UserId;
+            if (profileFromDb.Cars != profile.Cars)
+                profileFromDb.Cars = profile.Cars;
+            if (profileFromDb.Preferences != profile.Preferences)
+                profileFromDb.Preferences = profile.Preferences;
 
             return await _dbContext.SaveChangesAsync() > 0;
         }
@@ -72,10 +64,10 @@ namespace CoVoyageurAPI.Repositories
         // DELETE
         public async Task<bool> Delete(int id)
         {
-            var Profile = await GetById(id);
-            if (Profile == null)
+            var profile = await GetById(id);
+            if (profile == null)
                 return false;
-            _dbContext.Profiles.Remove(Profile);
+            _dbContext.Profiles.Remove(profile);
             return await _dbContext.SaveChangesAsync() > 0;
         }
     }
