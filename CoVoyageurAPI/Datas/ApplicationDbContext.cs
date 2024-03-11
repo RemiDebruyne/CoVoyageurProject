@@ -1,12 +1,13 @@
 ﻿using CoVoyageurCore.Models;
 using CoVoyageurCore.Datas;
 using Microsoft.EntityFrameworkCore;
+using static CoVoyageurCore.Models.Profile;
 
 namespace CoVoyageurAPI.Datas
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext() : base()
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -23,10 +24,13 @@ namespace CoVoyageurAPI.Datas
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {        
+        {
+            modelBuilder.Entity<Profile>()
+                .Ignore(e => e.Preferences);
+
             modelBuilder.Entity<Rating>()
                 .HasOne(r => r.RatedUser)
-                .WithMany(u=>u.RatedRatings)
+                .WithMany(u => u.RatedRatings)
                 .HasForeignKey(r => r.RatedUserId)
                 .OnDelete(DeleteBehavior.NoAction);
 

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using CoVoyageurCore.Models;
 using CoVoyageurAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using CoVoyageurAPI.Helpers;
 
 namespace CoVoyageurCore.Controllers
 {
@@ -9,13 +11,13 @@ namespace CoVoyageurCore.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserRepository _repository;
+        private readonly IRepository<User> _repository;
 
-        public UsersController(UserRepository repository)
+        public UsersController(IRepository<User> repository)
         {
             _repository = repository;
         }
-
+        //[Authorize(Roles = Constants.RoleUser)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> Get()
         {
