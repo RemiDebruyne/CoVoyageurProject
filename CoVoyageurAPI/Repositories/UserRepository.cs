@@ -7,9 +7,8 @@ namespace CoVoyageurAPI.Repositories
 {
     public class UserRepository : IRepository<User>
     {
-        private readonly ApplicationDbContext _dbContext;
-
-        public UserRepository(ApplicationDbContext dbContext) 
+        private ApplicationDbContext _dbContext { get; }
+        public UserRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -27,17 +26,14 @@ namespace CoVoyageurAPI.Repositories
         {
             return await _dbContext.Users.FindAsync(id);
         }
-
         public async Task<User?> Get(Expression<Func<User, bool>> predicate)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(predicate);
         }
-
         public async Task<List<User>> GetAll()
         {
-            return _dbContext.Users.ToList();
+            return await _dbContext.Users.ToListAsync();
         }
-
         public async Task<List<User>> GetAll(Expression<Func<User, bool>> predicate)
         {
             return await _dbContext.Users.Where(predicate).ToListAsync();
@@ -59,21 +55,18 @@ namespace CoVoyageurAPI.Repositories
                 userFromDb.Email = user.Email;
             if (userFromDb.Phone != user.Phone)
                 userFromDb.Phone = user.Phone;
-            if (userFromDb.Password != user.Password)
-                userFromDb.Password = user.Password;
+            if (userFromDb.PassWord != user.PassWord)
+                userFromDb.PassWord = user.PassWord;
             if (userFromDb.BirthDate != user.BirthDate)
                 userFromDb.BirthDate = user.BirthDate;
             if (userFromDb.Gender != user.Gender)
                 userFromDb.Gender = user.Gender;
-            if (userFromDb.UserRating != user.UserRating)
-                userFromDb.UserRating = user.UserRating;
+            if (userFromDb.IsAdmin != user.IsAdmin)
+                userFromDb.IsAdmin = user.IsAdmin;
             if (userFromDb.RatedRatings != user.RatedRatings)
                 userFromDb.RatedRatings = user.RatedRatings;
             if (userFromDb.RatingRatings != user.RatingRatings)
                 userFromDb.RatingRatings = user.RatingRatings;
-            //Un user peut devenir admin ?
-            //if (userFromDb.IsAdmin != user.IsAdmin)
-            //    userFromDb.IsAdmin = user.IsAdmin;
 
             return await _dbContext.SaveChangesAsync() > 0;
         }

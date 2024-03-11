@@ -1,17 +1,13 @@
-﻿using CoVoyageurAPI.Datas;
+﻿using CoVoyageurAPI.DTOs;
 using CoVoyageurAPI.Helpers;
-using CoVoyageurAPI.Repositories;
-using CoVoyageurCore.Controllers;
-using CoVoyageurCore.DTOs;
 using CoVoyageurCore.Models;
-using Microsoft.AspNetCore.Http;
+using CoVoyageurAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Json.Serialization.Metadata;
 
 namespace CoVoyageurAPI.Controllers
 {
@@ -20,109 +16,129 @@ namespace CoVoyageurAPI.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IRepository<User> _userRepository;
-        private readonly AppSettings _appSettings;
-
-        public AuthenticationController(IRepository<User> repository, IOptions<AppSettings> appSettings)
+        private readonly AppSettings _settings;
+        private readonly string _securityKey = "clé super secrète";
+        public AuthenticationController(IRepository<User> userRepository,
+            IOptions<AppSettings> appSettings)
         {
-            _userRepository = repository;
-            _appSettings = appSettings.Value;
+            _userRepository = userRepository;
+            _settings = appSettings.Value;
         }
 
-        [HttpPost("register")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Register([FromBody] User user)
         {
             if (await _userRepository.Get(u => u.Email == user.Email) != null)
-                return BadRequest("email already exists");
+                return BadRequest("Email is already taken!");
 
-            //TODO crypt user password
-            //Il va falloir ajouter le cryptage à l'ajout et la modification d'un user
+            user.PassWord = EncryptPassword(user.PassWord);
+            // pour restreindre la création d'admins : isAdmin = false
 
-            var addedUser = await _userRepository.Add(user);
+            if (await _userRepository.Add(user) > 0)
+                return Ok(new { id = user.Id, Message = "user created!" });
+            return BadRequest("Something went wrong...");
+        }
 
-            if (addedUser == null)
-                return BadRequest("Something went wrong");
+        [HttpGet("[action]/{id}")]
+        //[Authorize(Policy = Constants.RoleAdmin)]
+        public async Task<IActionResult> Get(int id)
+        {
+            User? user = await _userRepository.Get(u => u.Id == id);
+            if (user == null)
+                return BadRequest("User Not Found");
 
-            var role = user.IsAdmin ? Constants.RoleAdmin : Constants.RoleUser;
-
-            List<Claim> claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Role, role),
-                new Claim("Userid", user.Id.ToString()),
-            };
-
-            SigningCredentials signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_appSettings.SecretKey!)), SecurityAlgorithms.HmacSha256);
-
-            JwtSecurityToken jwt = new JwtSecurityToken(
-                claims: claims,
-                issuer: _appSettings.ValidIssuer,
-                audience: _appSettings.ValidAudience,
-                signingCredentials: signingCredentials,
-                expires: DateTime.Now.AddHours(2)
-                );
-
-            string token = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-            return CreatedAtAction(nameof(UsersController.Get),
-                                    new
-                                    {
-                                        Token = token,
-                                        Message = "User successfuly registered",
-                                        User = addedUser
-                                    });
-
+            return Ok(user);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginDTO)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDTO login)
         {
-            //TODO crypter le mdp du loginDTO pour le comparer au mdp dans la ddb (il faut aussi ajouter le cryptage dans le UserController)
-            var userToLog = await _userRepository.Get(u => u.Email == loginDTO.Email && u.Password == loginDTO.Password);
-            if (userToLog == null)
-                return Unauthorized("Email or password is incorrect");
+            login.PassWord = EncryptPassword(login.PassWord);
 
+            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.PassWord);
 
-            var role = userToLog.IsAdmin ? Constants.RoleAdmin : Constants.RoleUser;
+            if (user == null) return BadRequest("Invalid Authentication !");
 
+            var role = user.IsAdmin ? "Admin" : "User";
+
+            //JWT
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Role, role),
-                new Claim("UserId", userToLog.Id.ToString()),
+                new Claim(ClaimTypes.Role, Constants.RoleAdmin),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
 
-            SigningCredentials signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_appSettings.SecretKey!)), SecurityAlgorithms.HmacSha256);
+            SigningCredentials signingCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_settings.SecretKey!)),
+                SecurityAlgorithms.HmacSha256);
 
             JwtSecurityToken jwt = new JwtSecurityToken(
+                issuer: _settings.ValidIssuer,
+                audience: _settings.ValidAudience,
                 claims: claims,
-                
-                issuer: _appSettings.ValidIssuer,
-                audience: _appSettings.ValidAudience,
                 signingCredentials: signingCredentials,
-                expires: DateTime.Now.AddHours(4)
+                expires: DateTime.Now.AddDays(7)
                 );
 
-            string token = new JwtSecurityTokenHandler().WriteToken(jwt);
+            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             return Ok(new
             {
                 Token = token,
-                Message = "User successfuly registered",
-                User = userToLog
+                Message = "Valid Authentication !",
+                User = user
             });
-
-
         }
 
-        [HttpGet]
-        public async Task<IActionResult> autoLogin([FromBody] string token)
+
+        [HttpPost("login-url-encoded")]
+        public async Task<IActionResult> LoginURL([FromForm] string email, [FromForm] string password)
         {
-            var handler = new JwtSecurityTokenHandler();
-            var jwt = handler.ReadJwtToken(token);
+            string encryptedPassword = EncryptPassword(password);
 
-            int.TryParse(jwt.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value, out int UserId);
+            var user = await _userRepository.Get(u => u.Email == email && u.PassWord == password);
 
-            var userToLog = await _userRepository.Get(u => u.Id == UserId);
+            if (user == null) return BadRequest("Invalid Authentication !");
 
-            return Ok(userToLog);
+            var role = user.IsAdmin ? "Admin" : "User";
+
+            //JWT
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Role, Constants.RoleAdmin),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            };
+
+            SigningCredentials signingCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_settings.SecretKey!)),
+                SecurityAlgorithms.HmacSha256);
+
+            JwtSecurityToken jwt = new JwtSecurityToken(
+                issuer: _settings.ValidIssuer,
+                audience: _settings.ValidAudience,
+                claims: claims,
+                signingCredentials: signingCredentials,
+                expires: DateTime.Now.AddDays(7)
+                );
+
+            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            return Ok(new
+            {
+                Token = token,
+                Message = "Valid Authentication !",
+                User = user
+            });
+        }
+
+        // possible d'ajouter les actions de crud des users ici ou dans un controlleur UserController
+
+        [NonAction]
+        private string EncryptPassword(string? password)
+        // il serait plus adapté de mettre ce genre de méthode dans un service dédié au chiffrage
+        {
+            if (string.IsNullOrEmpty(password)) return "";
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(password + _securityKey));
         }
     }
 }
