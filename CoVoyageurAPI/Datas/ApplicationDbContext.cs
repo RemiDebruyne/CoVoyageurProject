@@ -52,6 +52,9 @@ namespace CoVoyageurAPI.Datas
                 .HasForeignKey(r => r.RideId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Profile>()
+                .Ignore(e => e.Preferences);
+
             modelBuilder.Entity<User>().HasData(InitialCoVoyageur.users);
             modelBuilder.Entity<Profile>().HasData(InitialCoVoyageur.profiles);
             modelBuilder.Entity<Car>().HasData(InitialCoVoyageur.cars);
