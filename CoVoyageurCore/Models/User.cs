@@ -22,21 +22,20 @@ namespace CoVoyageurCore.Models
         public string? FullName => FirstName + " " + LastName; // get => pas d'attribut/variable FullName
 
         [Column("email")]
-        [Required]
-        [RegularExpression(@"^[\w-\.]+@([\w -]+\.)+[\w-]{2,4}$")]
+        [Required(ErrorMessage = "Email adress is required")]
         public string? Email { get; set; }
 
         [Column("phone")]
-        [Required]
+        [Required(ErrorMessage = "Phone number is required")]
         public string? Phone { get; set; }
 
         [Column("password")]
-        [Required]
+        [Required(ErrorMessage = "Password is required")]
         public string? PassWord { get; set; }
 
         [Column("birth_date")]
-        [Required]
-        [JsonIgnore]
+        [Required(ErrorMessage = "Birthdate is required")]
+        //[JsonIgnore]
         public DateTime BirthDate { get; set; }
 
         [Column("gender")]
@@ -49,8 +48,8 @@ namespace CoVoyageurCore.Models
         public Rating? UserRating { get; set; }
         public Profile? Profile { get; set; }
 
-        public List<Rating> RatedRatings { get; set; } = new();
-        public List<Rating> RatingRatings { get; set; } = new();
+        public List<Rating>? RatedRatings { get; set; } = new();
+        public List<Rating> ?RatingRatings { get; set; } = new();
 
     }
 }

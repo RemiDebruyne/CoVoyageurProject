@@ -1,5 +1,8 @@
 ﻿@page "/search"
+@using CoVoyageurView.Services
 @layout SearchLayout
+@inject IApiQueryService<Ride> service
+@inject HttpClient client;
 
 <div class="w-9/12">
     <div class="grid grid-cols-2">
@@ -11,21 +14,21 @@
                 <RideCard User="ride.User" Ride="ride" Rating="ride.User.UserRating" />
             }
         </div>
-
-
-
-
     </div>
 </div>
 
 
 @code {
 
-    public List<Ride> Rides { get; set; } = new();
+    public List<Ride> Rides { get; set; }
 
-    //Get list of ride from api
-    protected override Task OnInitializedAsync()
+    //TODO Not working because object not instaciated, most likely because the get all method doesnt include User and Rating which are recquired for the component to rend
+    protected override async Task OnInitializedAsync()
     {
-        return base.OnInitializedAsync();
+        // var rideList = await service.GetAll();
+        // Rides = rideList.ToList();
+
+        var rideList = await client.GetFromJsonAsync<List<Ride>>("http://localhost:5199/api/Rides");
+        Rides = rideList.ToList();
     }
 }

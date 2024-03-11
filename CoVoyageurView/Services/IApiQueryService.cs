@@ -7,6 +7,5 @@
         public Task<bool> Post(T entity);
         public Task<bool> Delete(int id);
         public Task<bool> Update(T entity, int id);
-
     }
 }

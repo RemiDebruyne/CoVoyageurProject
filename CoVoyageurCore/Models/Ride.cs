@@ -18,7 +18,7 @@ namespace CoVoyageurCore.Models
         public DateTime RideDate { get; set; }
 
         [Column("price")]
-        public decimal Price { get; set; }
+        public int Price { get; set; }
 
         [Column("availableSeats")]
         public int AvailableSeats { get; set; }

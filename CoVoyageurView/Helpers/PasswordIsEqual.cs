@@ -12,7 +12,7 @@ namespace CoVoyageurView.Helpers
         }
         public override bool IsValid(object? value)
         {
-            if (value != User.Password)
+            if (value != User.PassWord)
                 return false;
             return true;
         }
