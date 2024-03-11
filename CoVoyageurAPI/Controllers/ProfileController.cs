@@ -5,8 +5,8 @@ using CoVoyageurAPI.Repositories;
 
 namespace CoVoyageurCore.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]   
     public class ProfilesController : ControllerBase
     {
         private readonly ProfileRepository _repository;

@@ -55,13 +55,8 @@ namespace CoVoyageurAPI.Repositories
                 carFromDb.Model = car.Model;
             if (carFromDb.Brand != car.Brand)
                 carFromDb.Brand = car.Brand;
-            if (carFromDb.UserId != car.UserId)
-                carFromDb.UserId = car.UserId;
-            if (carFromDb.User != car.User)
-                carFromDb.User = car.User;
             if (carFromDb.Color != car.Color)
                 carFromDb.Color = car.Color;
-
 
             return await _dbContext.SaveChangesAsync() > 0;
         }
