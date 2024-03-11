@@ -6,9 +6,11 @@ namespace CoVoyageurAPI.Datas
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext() : base()
-        {
-        }
+        //public ApplicationDbContext() : base()
+        //{
+        //}
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }
@@ -17,10 +19,10 @@ namespace CoVoyageurAPI.Datas
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Rating> Ratings { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\CoVoyageur; Database=CoVoyageur; Integrated Security=True");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Data Source=(localdb)\\CoVoyageur; Database=CoVoyageur; Integrated Security=True");
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {        
@@ -60,5 +62,3 @@ namespace CoVoyageurAPI.Datas
         }
     }
 }
-
-

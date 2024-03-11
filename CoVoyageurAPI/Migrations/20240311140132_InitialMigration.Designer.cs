@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoVoyageurAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240308132459_Init")]
-    partial class Init
+    [Migration("20240311140132_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,7 +72,7 @@ namespace CoVoyageurAPI.Migrations
                         {
                             Id = 1,
                             Brand = "Ford",
-                            Color = 2,
+                            Color = 3,
                             LicensePlate = "OG-666-OG",
                             Model = "Fiesta",
                             UserId = 1
@@ -81,7 +81,7 @@ namespace CoVoyageurAPI.Migrations
                         {
                             Id = 2,
                             Brand = "Ford",
-                            Color = 2,
+                            Color = 3,
                             LicensePlate = "AB-123-RT",
                             Model = "Fiesta",
                             UserId = 2
@@ -90,7 +90,7 @@ namespace CoVoyageurAPI.Migrations
                         {
                             Id = 3,
                             Brand = "Ford",
-                            Color = 2,
+                            Color = 3,
                             LicensePlate = "AB-123-RT",
                             Model = "Fiesta",
                             UserId = 3
@@ -99,7 +99,7 @@ namespace CoVoyageurAPI.Migrations
                         {
                             Id = 4,
                             Brand = "Ford",
-                            Color = 2,
+                            Color = 3,
                             LicensePlate = "AB-123-RT",
                             Model = "Fiesta",
                             UserId = 4
@@ -114,9 +114,6 @@ namespace CoVoyageurAPI.Migrations
                         .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Preferences")
-                        .HasColumnType("int");
 
                     b.Property<int?>("Rating")
                         .IsRequired()
@@ -133,7 +130,8 @@ namespace CoVoyageurAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("profile");
 
@@ -141,15 +139,13 @@ namespace CoVoyageurAPI.Migrations
                         new
                         {
                             Id = 1,
-                            Preferences = 2,
                             Rating = 5,
-                            Review = "¨Parfait",
+                            Review = "Parfait",
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Preferences = 1,
                             Rating = 4,
                             Review = "Bien",
                             UserId = 2
@@ -157,7 +153,6 @@ namespace CoVoyageurAPI.Migrations
                         new
                         {
                             Id = 3,
-                            Preferences = 0,
                             Rating = 3,
                             Review = "Moyen",
                             UserId = 3
@@ -165,7 +160,6 @@ namespace CoVoyageurAPI.Migrations
                         new
                         {
                             Id = 4,
-                            Preferences = 2,
                             Rating = 2,
                             Review = "Mauvais",
                             UserId = 4
@@ -201,8 +195,8 @@ namespace CoVoyageurAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("rideid");
 
-                    b.Property<int>("Score")
-                        .HasColumnType("int")
+                    b.Property<decimal>("Score")
+                        .HasColumnType("decimal(18,2)")
                         .HasColumnName("score");
 
                     b.HasKey("Id");
@@ -224,7 +218,7 @@ namespace CoVoyageurAPI.Migrations
                             RatingDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RatingUserId = 1,
                             RideId = 1,
-                            Score = 5
+                            Score = 5m
                         },
                         new
                         {
@@ -234,7 +228,7 @@ namespace CoVoyageurAPI.Migrations
                             RatingDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RatingUserId = 2,
                             RideId = 2,
-                            Score = 2
+                            Score = 2m
                         });
                 });
 
@@ -429,7 +423,12 @@ namespace CoVoyageurAPI.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("phone");
 
+                    b.Property<int?>("UserRatingId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserRatingId");
 
                     b.ToTable("user");
 
@@ -502,8 +501,8 @@ namespace CoVoyageurAPI.Migrations
             modelBuilder.Entity("CoVoyageurCore.Models.Profile", b =>
                 {
                     b.HasOne("CoVoyageurCore.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("Profile")
+                        .HasForeignKey("CoVoyageurCore.Models.Profile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -567,6 +566,15 @@ namespace CoVoyageurAPI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CoVoyageurCore.Models.User", b =>
+                {
+                    b.HasOne("CoVoyageurCore.Models.Rating", "UserRating")
+                        .WithMany()
+                        .HasForeignKey("UserRatingId");
+
+                    b.Navigation("UserRating");
+                });
+
             modelBuilder.Entity("CoVoyageurCore.Models.Profile", b =>
                 {
                     b.Navigation("Cars");
@@ -579,6 +587,9 @@ namespace CoVoyageurAPI.Migrations
 
             modelBuilder.Entity("CoVoyageurCore.Models.User", b =>
                 {
+                    b.Navigation("Profile")
+                        .IsRequired();
+
                     b.Navigation("RatedRatings");
 
                     b.Navigation("RatingRatings");

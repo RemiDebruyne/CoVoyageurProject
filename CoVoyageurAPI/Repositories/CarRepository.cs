@@ -8,7 +8,7 @@ namespace CoVoyageurAPI.Repositories
 {
     public class CarRepository : IRepository<Car>
     {
-        private ApplicationDbContext _dbContext { get; set; }
+        private ApplicationDbContext _dbContext { get; }
         public CarRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;

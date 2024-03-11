@@ -138,7 +138,7 @@ namespace CoVoyageurAPI.Migrations
                         {
                             Id = 1,
                             Rating = 5,
-                            Review = "¨Parfait",
+                            Review = "Parfait",
                             UserId = 1
                         },
                         new
