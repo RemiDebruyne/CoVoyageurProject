@@ -1,12 +1,14 @@
 ﻿using CoVoyageurCore.Models;
 using CoVoyageurAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using CoVoyageurAPI.Helpers;
 
 namespace CoVoyageurAPI.Controllers
 {
     [Route("api/cars")]
     [ApiController]
-    //[Authorize(Policy = Constants.PolicyAdmin)]
+    [Authorize]
     public class CarsController : ControllerBase
     {
         private readonly IRepository<Car> _carRepository;
@@ -20,7 +22,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = Constants.RoleUser+","+Constants.RoleAdmin)]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> Menu()
         {
             return Ok(await _carRepository.GetAll());
@@ -33,6 +35,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> AddCar([FromBody] Car car)
         {
             var carId = await _carRepository.Add(car);
