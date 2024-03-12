@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CoVoyageurAPI.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -142,10 +142,10 @@ namespace CoVoyageurAPI.Migrations
                 columns: new[] { "id", "birth_date", "email", "firstname", "gender", "IsAdmin", "lastname", "password", "phone", "UserRatingId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "kevin@mail.com", "Kevin", "M", false, "Callet", "pswd", "0102030405", null },
-                    { 2, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "massimo@mail.com", "Massima", "M", false, "Mao", "pswd", "0102030405", null },
-                    { 3, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "remi@mail.com", "Rémi", "M", false, "Debruyne", "pswd", "0102030405", null },
-                    { 4, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "aguit@mail.com", "Aguit", "M", false, "Inan", "pswd", "0102030405", null }
+                    { 1, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "kevin@mail.com", "Kevin", "M", true, "Callet", "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=", "0102030405", null },
+                    { 2, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "massimo@mail.com", "Massima", "M", false, "Mao", "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=", "0102030405", null },
+                    { 3, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "remi@mail.com", "Rémi", "M", false, "Debruyne", "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=", "0102030405", null },
+                    { 4, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "aguit@mail.com", "Aguit", "M", true, "Inan", "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=", "0102030405", null }
                 });
 
             migrationBuilder.InsertData(

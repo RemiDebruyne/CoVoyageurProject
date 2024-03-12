@@ -62,52 +62,15 @@ namespace CoVoyageurAPI.Controllers
             var role = user.IsAdmin ? "Admin" : "User";
 
             //JWT
-            List<Claim> claims = new List<Claim>()
+            string roleClaimValue = role == "Admin" ? Constants.RoleAdmin : Constants.RoleUser;
+
+            // Initialisation de la liste des claims avec les valeurs déterminées
+            List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, Constants.RoleAdmin),
+                new Claim(ClaimTypes.Role, roleClaimValue),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
 
-            SigningCredentials signingCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_settings.SecretKey!)),
-                SecurityAlgorithms.HmacSha256);
-
-            JwtSecurityToken jwt = new JwtSecurityToken(
-                issuer: _settings.ValidIssuer,
-                audience: _settings.ValidAudience,
-                claims: claims,
-                signingCredentials: signingCredentials,
-                expires: DateTime.Now.AddDays(7)
-                );
-
-            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-            return Ok(new
-            {
-                Token = token,
-                Message = "Valid Authentication !",
-                User = user
-            });
-        }
-
-
-        [HttpPost("login-url-encoded")]
-        public async Task<IActionResult> LoginURL([FromForm] string email, [FromForm] string password)
-        {
-            string encryptedPassword = EncryptPassword(password);
-
-            var user = await _userRepository.Get(u => u.Email == email && u.PassWord == password);
-
-            if (user == null) return BadRequest("Invalid Authentication !");
-
-            var role = user.IsAdmin ? "Admin" : "User";
-
-            //JWT
-            List<Claim> claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Role, Constants.RoleAdmin),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            };
 
             SigningCredentials signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_settings.SecretKey!)),
