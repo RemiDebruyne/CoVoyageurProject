@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using CoVoyageurCore.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoVoyageurAPI.Controllers
 {
@@ -57,7 +58,7 @@ namespace CoVoyageurAPI.Controllers
 
             var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.Password);
 
-            if (user == null) 
+            if (user == null)
                 return BadRequest("Invalid Authentication !");
 
             var role = user.IsAdmin ? "Admin" : "User";
@@ -65,7 +66,7 @@ namespace CoVoyageurAPI.Controllers
             //JWT
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Role, Constants.RoleAdmin),
+                new Claim(ClaimTypes.Role, role),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
 
@@ -132,21 +133,24 @@ namespace CoVoyageurAPI.Controllers
             });
         }
 
-            // possible d'ajouter les actions de crud des users ici ou dans un controlleur UserController
+        // possible d'ajouter les actions de crud des users ici ou dans un controlleur UserController
 
-            [HttpPost]
-            public async Task<IActionResult> autoLogin([FromBody] string token)
-            {
-                var handler = new JwtSecurityTokenHandler();
-                var jwt = handler.ReadJwtToken(token);
+        [HttpGet]
+        [Authorize(Roles = Constants.RoleUser)]
+        public async Task<IActionResult> autoLogin(/*[FromHeader] string token*/)
+        {
+            //var handler = new JwtSecurityTokenHandler();
+            //var jwt = handler.ReadJwtToken(token);
 
 
-                int.TryParse(jwt.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value, out int UserId);
+            //int.TryParse(jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value, out int userId);
+            int.TryParse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value, out int userId);
 
-                var user = await _userRepository.Get(u => u.Id == UserId);
-
-                return Ok(user);
-            }
+            var user = await _userRepository.Get(u => u.Id == userId);
+            if (user == null)
+                return NotFound("No account was found with this user");
+            return Ok(user);
+        }
 
         [NonAction]
         private string EncryptPassword(string? password)
