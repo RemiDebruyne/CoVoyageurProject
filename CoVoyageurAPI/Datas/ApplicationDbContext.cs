@@ -16,14 +16,7 @@ namespace CoVoyageurAPI.Datas
         public DbSet<Rating> Ratings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-<<<<<<< HEAD
-        {
-            modelBuilder.Entity<Profile>()
-                .Ignore(e => e.Preferences);
-
-=======
         {       
->>>>>>> 786ec6c2db4be1d0ce4ab1b2ab061e8ced8b8ccf
             modelBuilder.Entity<Rating>()
                 .HasOne(r => r.RatedUser)
                 .WithMany(u => u.RatedRatings)
