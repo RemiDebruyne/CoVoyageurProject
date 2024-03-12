@@ -1,4 +1,5 @@
-﻿using CoVoyageurAPI.Helpers;
+using CoVoyageurAPI.DTOs;
+using CoVoyageurAPI.Helpers;
 using CoVoyageurCore.Models;
 using CoVoyageurAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using CoVoyageurCore.DTOs;
 
 namespace CoVoyageurAPI.Controllers
 {
@@ -25,7 +25,7 @@ namespace CoVoyageurAPI.Controllers
             _settings = appSettings.Value;
         }
 
-        [HttpPost("register")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Register([FromBody] User user)
         {
             if (await _userRepository.Get(u => u.Email == user.Email) != null)
@@ -53,21 +53,24 @@ namespace CoVoyageurAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO login)
         {
-            login.Password = EncryptPassword(login.Password);
+            login.PassWord = EncryptPassword(login.PassWord);
 
-            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.Password);
+            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.PassWord);
 
-            if (user == null) 
-                return BadRequest("Invalid Authentication !");
+            if (user == null) return BadRequest("Invalid Authentication !");
 
             var role = user.IsAdmin ? "Admin" : "User";
 
             //JWT
-            List<Claim> claims = new List<Claim>()
+            string roleClaimValue = role == "Admin" ? Constants.RoleAdmin : Constants.RoleUser;
+
+            // Initialisation de la liste des claims avec les valeurs déterminées
+            List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, Constants.RoleAdmin),
+                new Claim(ClaimTypes.Role, roleClaimValue),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
+
 
             SigningCredentials signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_settings.SecretKey!)),
@@ -91,62 +94,7 @@ namespace CoVoyageurAPI.Controllers
             });
         }
 
-
-        [HttpPost("login-url-encoded")]
-        public async Task<IActionResult> LoginURL([FromForm] string email, [FromForm] string password)
-        {
-            string encryptedPassword = EncryptPassword(password);
-
-            var user = await _userRepository.Get(u => u.Email == email && u.PassWord == password);
-
-            if (user == null) return Unauthorized("Invalid Authentication !");
-
-            var role = user.IsAdmin ? "Admin" : "User";
-
-            //JWT
-            List<Claim> claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Role, Constants.RoleAdmin),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            };
-
-            SigningCredentials signingCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_settings.SecretKey!)),
-                SecurityAlgorithms.HmacSha256);
-
-            JwtSecurityToken jwt = new JwtSecurityToken(
-                issuer: _settings.ValidIssuer,
-                audience: _settings.ValidAudience,
-                claims: claims,
-                signingCredentials: signingCredentials,
-                expires: DateTime.Now.AddDays(7)
-                );
-
-            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-            return Ok(new LoginResponseDTO
-            {
-                Token = token,
-                Message = "Valid Authentication !",
-                User = user
-            });
-        }
-
-            // possible d'ajouter les actions de crud des users ici ou dans un controlleur UserController
-
-            [HttpPost]
-            public async Task<IActionResult> autoLogin([FromBody] string token)
-            {
-                var handler = new JwtSecurityTokenHandler();
-                var jwt = handler.ReadJwtToken(token);
-
-
-                int.TryParse(jwt.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value, out int UserId);
-
-                var user = await _userRepository.Get(u => u.Id == UserId);
-
-                return Ok(user);
-            }
+        // possible d'ajouter les actions de crud des users ici ou dans un controlleur UserController
 
         [NonAction]
         private string EncryptPassword(string? password)
@@ -155,6 +103,5 @@ namespace CoVoyageurAPI.Controllers
             if (string.IsNullOrEmpty(password)) return "";
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(password + _securityKey));
         }
-
     }
 }

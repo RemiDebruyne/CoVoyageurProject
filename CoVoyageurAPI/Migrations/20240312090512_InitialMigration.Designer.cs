@@ -4,6 +4,7 @@ using CoVoyageurAPI.Datas;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoVoyageurAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240312090512_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -309,8 +311,8 @@ namespace CoVoyageurAPI.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("departure");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int")
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
                         .HasColumnName("price");
 
                     b.Property<DateTime>("RideDate")
@@ -335,7 +337,7 @@ namespace CoVoyageurAPI.Migrations
                             AvailableSeats = 4,
                             CreationDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Departure = "9h00",
-                            Price = 20,
+                            Price = 20.00m,
                             RideDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
                         },
@@ -346,7 +348,7 @@ namespace CoVoyageurAPI.Migrations
                             AvailableSeats = 4,
                             CreationDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Departure = "9h00",
-                            Price = 20,
+                            Price = 20.00m,
                             RideDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 2
                         },
@@ -357,7 +359,7 @@ namespace CoVoyageurAPI.Migrations
                             AvailableSeats = 4,
                             CreationDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Departure = "9h00",
-                            Price = 20,
+                            Price = 20.00m,
                             RideDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 3
                         },
@@ -368,7 +370,7 @@ namespace CoVoyageurAPI.Migrations
                             AvailableSeats = 4,
                             CreationDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Departure = "9h00",
-                            Price = 20,
+                            Price = 20.00m,
                             RideDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 4
                         });
