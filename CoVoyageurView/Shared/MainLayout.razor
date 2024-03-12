@@ -1,4 +1,9 @@
-﻿@inherits LayoutComponentBase
+﻿@using CoVoyageurView.Services
+@inherits LayoutComponentBase
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject HttpClient client;
+@inject UserState userState;
+
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -8,16 +13,14 @@
 </header>
 <div class="page">
     <main>
+
         <article class="content">
             @Body
         </article>
+
     </main>
 </div>
 
 @code {
-    // TODO requete vérification, si jwt existe, si valide => connexion auto => besoin d'un endpoint spécifique
-    // protected override Task OnInitializedAsync()
-    // {
-        
-    // }
+    protected override Task OnInitializedAsync() => userState.GetUserState(localStorage, client);
 }

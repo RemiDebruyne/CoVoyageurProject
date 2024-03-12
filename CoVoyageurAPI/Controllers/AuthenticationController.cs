@@ -1,4 +1,4 @@
-﻿using CoVoyageurAPI.DTOs;
+using CoVoyageurAPI.DTOs;
 using CoVoyageurAPI.Helpers;
 using CoVoyageurCore.Models;
 using CoVoyageurAPI.Repositories;
