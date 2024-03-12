@@ -10,15 +10,13 @@ namespace CoVoyageurCore.Models
         public int Id { get; set; }
 
         [Column("rating")]
-        [Required]
         public int? Rating { get; set; }
 
         [Column("review")]
-        [Required]
         public string? Review { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
 
         public List<Car>? Cars { get; set; }
 
