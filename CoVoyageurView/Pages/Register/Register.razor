@@ -1,18 +1,12 @@
 ﻿@page "/register"
 @layout NoMenuLayout
-@inject IApiQueryService<User> service;
+@inject AuthenticationApiService service;
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject HttpClient client
+@using CoVoyageurCore.DTOs
 @using CoVoyageurView.Services
 @using Helpers;
 @using System.ComponentModel.DataAnnotations
-@* FirstName
-LastName
-Email
-Password
-BirthDate
-Gender
-Phone
-*@
-
 
 <div class="flex w-8/12 h-4/5 rounded-2xl bg-white overflow-hidden">
     <div class="bg-[url('/images/pink-stairs.jpg')] bg-cover bg-center w-[40%]">
@@ -20,6 +14,10 @@ Phone
     <div class="flex flex-col w-[60%]">
         <h1 class="text-center text-4xl mt-10 mb-8 text-primary-500 font-bold">Welcome aboard !</h1>
         <EditForm Model="User" OnValidSubmit="@HandleSubmit" class="self-center grid grid-cols-2 grid-rows-[1fr_1fr_1r_1fr_1fr_1fr] gap-x-4 gap-y-2  w-[45%]">
+            <DataAnnotationsValidator />
+            <div class="text-red-500">
+                <ValidationSummary />
+            </div>
             <div>
                 <label for="firstname" class="font-semibold text-gray-600">Firstname</label>
                 <InputText id="firstname" @bind-Value="User.FirstName" class="input-register"></InputText>
@@ -30,14 +28,14 @@ Phone
             </div>
             <div class="col-span-2">
                 <label for="email" class="font-semibold text-gray-600">Email</label>
-                <InputText id="email" @bind-Value="User.Email" class="input-register"></InputText>
+                <InputText type="email" id="email" @bind-Value="User.Email" class="input-register"></InputText>
             </div>
             <div class="col-span-2">
                 <label for="password" class="font-semibold text-gray-600">Password</label>
-                <InputText id="password" type="password" @bind-Value="User.Password" class="input-register"></InputText>
+                <InputText id="password" type="password" @bind-Value="User.PassWord" class="input-register"></InputText>
 
             </div>
-            <div class="col-span-2">
+@*             <div class="col-span-2">
                 <label for="passwordCheck" class="font-semibold text-gray-600">Verify your password</label>
                 <InputText id="passwordCheck" type="password" @bind-Value="PasswordCheck" @onblur="PasswordValidation" class="input-register group-invalid:"></InputText>
                 @if (!PasswordIsValid)
@@ -45,6 +43,10 @@ Phone
                     <small class="text-red-500">Passwords do not match. Please try again.</small>
                 }
 
+            </div> *@
+            <div class="col-span-2">
+                <label for="phone" class="font-semibold text-gray-600">Phone Number</label>
+                <InputText type="phone" max-length="10" id="phone" @bind-Value="User.Phone" class="input-register"></InputText>
             </div>
             <div>
                 <label for="birthdate" class="font-semibold text-gray-600">Birthdate</label>
@@ -54,15 +56,15 @@ Phone
             <div>
                 <label for="gender" class="font-semibold text-gray-600">Gender</label>
                 <InputSelect id="gender" @bind-Value="User.Gender" class="input-register">
-                    Select a gender
-                    <option value="@User.Gender">M</option>
-                    <option value="@User.Gender">F</option>
-                    <option value="@User.Gender">Other</option>
+                    <option value="#">Select a gender</option>
+                    <option value="M">M</option>
+                    <option value="F">F</option>
+                    <option value="N">N</option>
                 </InputSelect>
             </div>
             <div class="col-span-2 text-center">
                 <button type="submit" class="px-12 py-2 mt-4 bg-primary-500 font-bold text-white hover:bg-primary-700">Sign up</button>
-                <p class="text-red-500">@ErrorMessage</p>
+                <p class="text-red-500 mt-4">@ErrorMessage</p>
             </div>
         </EditForm>
     </div>
@@ -82,22 +84,50 @@ Phone
     [Inject]
     public NavigationManager Navigation { get; set; }
 
-    public async void HandleSubmit()
+    public async Task HandleSubmit()
     {
-
-        var success = await service.Post(User);
-
-        if (!success)
+        var success = await service.Register(User);
+        // var success = await client.PostAsJsonAsync("http://localhost:5199/api/Authentication/register", User);
+        if ((int)success.StatusCode >= 400 && (int)success.StatusCode <=499)
         {
-            ErrorMessage = "Registering went wrong, please try agian";
+            ErrorMessage =  "Bad request";
+
         }
 
-        if (success)
+        if ((int)success.StatusCode >= 500 && (int)success.StatusCode <= 599)
         {
-            ErrorMessage = "";
-            //This wont work as we do not have a way to get the user id yet
-            Navigation.NavigateTo("/register/profile/{id}");
+            ErrorMessage =  "Our servers are encountering some issues, please try again later";
+
         }
+
+        if ((int)success.StatusCode >= 200 && (int)success.StatusCode <= 299);
+        {
+            ErrorMessage = "Register successfull";
+            Navigation.NavigateTo("/register/profile/");
+    
+
+            var loginResponse = await service.Login(new LoginRequestDTO
+                {
+                    Password = User.PassWord,
+                    Email = User.Email
+                });
+
+
+
+            if (loginResponse == null)
+            {
+                ErrorMessage = "Login went wrong, please try again";
+            }
+
+            if (loginResponse != null)
+            {
+                localStorage.SetItemAsync("token", loginResponse.Token);
+                ErrorMessage = "";
+                Navigation.NavigateTo("/register/profile/");
+            }
+
+        }
+
     }
 
     #region PasswordValidation
@@ -110,7 +140,7 @@ Phone
     public void PasswordValidation()
     {
         PasswordIsValid = true;
-        if (User.Password != PasswordCheck)
+        if (User.PassWord != PasswordCheck)
         {
             PasswordCheck = "";
             PasswordIsValid = false;

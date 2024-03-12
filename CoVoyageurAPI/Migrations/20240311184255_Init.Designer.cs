@@ -4,6 +4,7 @@ using CoVoyageurAPI.Datas;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoVoyageurAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240311184255_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -438,9 +440,9 @@ namespace CoVoyageurAPI.Migrations
                             Email = "kevin@mail.com",
                             FirstName = "Kevin",
                             Gender = "M",
-                            IsAdmin = true,
+                            IsAdmin = false,
                             LastName = "Callet",
-                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         },
                         new
@@ -452,7 +454,7 @@ namespace CoVoyageurAPI.Migrations
                             Gender = "M",
                             IsAdmin = false,
                             LastName = "Mao",
-                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         },
                         new
@@ -464,7 +466,7 @@ namespace CoVoyageurAPI.Migrations
                             Gender = "M",
                             IsAdmin = false,
                             LastName = "Debruyne",
-                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         },
                         new
@@ -474,9 +476,9 @@ namespace CoVoyageurAPI.Migrations
                             Email = "aguit@mail.com",
                             FirstName = "Aguit",
                             Gender = "M",
-                            IsAdmin = true,
+                            IsAdmin = false,
                             LastName = "Inan",
-                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         });
                 });
