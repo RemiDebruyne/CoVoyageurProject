@@ -44,7 +44,7 @@ namespace CoVoyageurTestsXUnit
             var result = await controller.AddCar(newCar);
 
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
-            Assert.Equal("Car added", actionResult.Value); // Assurez-vous que votre méthode retourne cette valeur pour le succès
+            Assert.Equal("Car added", actionResult.Value);
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace CoVoyageurTestsXUnit
             var result = await controller.RemoveCar(1);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
-            Assert.Equal("Car Deleted !", okResult.Value); // Assurez-vous que votre méthode retourne cette valeur pour le succès
+            Assert.Equal("Car Deleted !", okResult.Value);
         }
     }
 }
