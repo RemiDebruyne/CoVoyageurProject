@@ -95,7 +95,7 @@ namespace CoVoyageurAPI.Migrations
                     userId = table.Column<int>(type: "int", nullable: false),
                     creationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     rideDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    price = table.Column<int>(type: "int", nullable: false),
                     availableSeats = table.Column<int>(type: "int", nullable: false),
                     departure = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     arrival = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -175,10 +175,10 @@ namespace CoVoyageurAPI.Migrations
                 columns: new[] { "id", "arrival", "availableSeats", "creationDate", "departure", "price", "rideDate", "userId" },
                 values: new object[,]
                 {
-                    { 1, "10h00", 4, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9h00", 20.00m, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 2, "10h00", 4, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9h00", 20.00m, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
-                    { 3, "10h00", 4, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9h00", 20.00m, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 },
-                    { 4, "10h00", 4, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9h00", 20.00m, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4 }
+                    { 1, "10h00", 4, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9h00", 20, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, "10h00", 4, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9h00", 20, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 3, "10h00", 4, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9h00", 20, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 },
+                    { 4, "10h00", 4, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9h00", 20, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4 }
                 });
 
             migrationBuilder.InsertData(

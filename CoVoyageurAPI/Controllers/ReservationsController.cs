@@ -1,12 +1,14 @@
-﻿using CoVoyageurCore.Models;
+﻿using CoVoyageurAPI.Helpers;
 using CoVoyageurAPI.Repositories;
+using CoVoyageurCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoVoyageurAPI.Controllers
 {
     [Route("api/reservations")]
     [ApiController]
-    //[Authorize(Policy = Constants.PolicyAdmin)]
+    [Authorize]
     public class ReservationsController : ControllerBase
     {
         private readonly IRepository<Reservation> _reservationRepository;
@@ -24,7 +26,6 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = Constants.RoleUser+","+Constants.RoleAdmin)]
         public async Task<IActionResult> Menu()
         {
             return Ok(await _reservationRepository.GetAll());
@@ -37,6 +38,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> AddReservation([FromBody] Reservation reservation)
         {
             var reservationId = await _reservationRepository.Add(reservation);
@@ -48,6 +50,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> UpdateReservation(int id, [FromBody] Reservation reservation)
         {
             var reservatio = await _reservationRepository.GetById(id);
@@ -62,6 +65,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> RemoveReservation(int id)
         {
             var reservatio = await _reservationRepository.GetById(id);
