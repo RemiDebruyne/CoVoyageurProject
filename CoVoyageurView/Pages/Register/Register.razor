@@ -118,7 +118,7 @@
 
             if (loginResponse != null)
             {
-                localStorage.SetItemAsync("token", loginResponse.Token);
+                await localStorage.SetItemAsync("token", loginResponse.Token);
                 ErrorMessage = "";
                 Navigation.NavigateTo("/register/profile/");
             }

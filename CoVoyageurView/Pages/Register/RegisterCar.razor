@@ -29,14 +29,14 @@
                     <div>
                         <label for="brand">Brand</label>
                         <InputText id="brand" class="input-register" @bind-Value="Car.Brand"></InputText>
-                        <small>
+                        <small class="text-red-500">
                             <ValidationMessage For="() => Car.Brand" />
                         </small>
                     </div>
                     <div>
                         <label for="model">Model</label>
                         <InputText id="model" class="input-register" @bind-Value="Car.Model"></InputText>
-                        <small>
+                        <small class="text-red-500">
                             <ValidationMessage For="() => Car.Model" />
                         </small>
                     </div>
@@ -52,14 +52,14 @@
                                 <option value="@color">@(color != Car.CarColor.Nothing ? color : "Select a color")</option>
                             }
                         </InputSelect>
-                        <small>
+                        <small class="text-red-500">
                             <ValidationMessage For="() => Car.Color" />
                         </small>
 
                     </div>
                     <div class="flex justify-center gap-8">
                         <button type="submit" class="btn">Add</button>
-                        <NavLink href="Index" class="btn-empty">Save & go to Home page</NavLink>
+                        <NavLink href="/" class="btn-empty">Save & go to Home page</NavLink>
                     </div>
 
                 </EditForm>
@@ -87,7 +87,7 @@
                 UserId = userState.User.Id
             };
         Cars.Add(car);
-
+        service.Post(car);
         Car = new();
         // Car = new();
 
