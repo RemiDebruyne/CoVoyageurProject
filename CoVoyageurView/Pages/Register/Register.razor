@@ -8,14 +8,14 @@
 @using Helpers;
 @using System.ComponentModel.DataAnnotations
 
-<div class="flex w-8/12 h-4/5 rounded-2xl bg-white overflow-hidden">
+<div class="flex w-8/12 min-h-4/5 rounded-2xl bg-white overflow-hidden">
     <div class="bg-[url('/images/pink-stairs.jpg')] bg-cover bg-center w-[40%]">
     </div>
     <div class="flex flex-col w-[60%]">
         <h1 class="text-center text-4xl mt-10 mb-8 text-primary-500 font-bold">Welcome aboard !</h1>
         <EditForm Model="User" OnValidSubmit="@HandleSubmit" class="self-center grid grid-cols-2 grid-rows-[1fr_1fr_1r_1fr_1fr_1fr] gap-x-4 gap-y-2  w-[45%]">
             <DataAnnotationsValidator />
-            <div class="text-red-500">
+            <div class="text-red-500 col-span-2">
                 <ValidationSummary />
             </div>
             <div>
@@ -102,16 +102,13 @@
 
         if ((int)success.StatusCode >= 200 && (int)success.StatusCode <= 299);
         {
-            ErrorMessage = "Register successfull";
-            Navigation.NavigateTo("/register/profile/");
-    
+            ErrorMessage = "Register successfull";    
 
             var loginResponse = await service.Login(new LoginRequestDTO
                 {
                     Password = User.PassWord,
                     Email = User.Email
                 });
-
 
 
             if (loginResponse == null)

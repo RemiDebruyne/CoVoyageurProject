@@ -1,4 +1,5 @@
 ﻿@using CoVoyageurView.Services
+@using System.Net.Http.Headers
 @inherits LayoutComponentBase
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject HttpClient client;
@@ -13,14 +14,34 @@
 </header>
 <div class="page">
     <main>
+        <CascadingValue Value="UserIsLogged">
+            <article class="content">
+                @Body
+            </article>
+        </CascadingValue>
 
-        <article class="content">
-            @Body
-        </article>
 
     </main>
 </div>
 
 @code {
-    protected override Task OnInitializedAsync() => userState.GetUserState(localStorage, client);
+    public bool UserIsLogged { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await localStorage.GetItemAsync<string>("token");
+
+        if (!String.IsNullOrEmpty(token))
+        {
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+            var user = await client.GetFromJsonAsync<User>("http://localhost:5199/api/Authentication");
+
+            if (user != null)
+            {
+                userState.User = user;
+                userState.Profile = user.Profile;
+                UserIsLogged = true;
+            }
+        }
+    }/*  => await userState.GetUserState(localStorage, client); */
 }
