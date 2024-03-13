@@ -1,12 +1,14 @@
-﻿using CoVoyageurCore.Models;
+﻿using CoVoyageurAPI.Helpers;
 using CoVoyageurAPI.Repositories;
+using CoVoyageurCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoVoyageurAPI.Controllers
 {
     [Route("api/ratings")]
     [ApiController]
-    //[Authorize(Policy = Constants.PolicyAdmin)]
+    [Authorize]
     public class RatingsController : ControllerBase
     {
         private readonly IRepository<Rating> _ratingRepository;
@@ -23,7 +25,6 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = Constants.RoleUser+","+Constants.RoleAdmin)]
         public async Task<IActionResult> Menu()
         {
             return Ok(await _ratingRepository.GetAll());
@@ -36,6 +37,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> AddRating([FromBody] Rating rating)
         {
             var ratingId = await _ratingRepository.Add(rating);
@@ -47,6 +49,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> UpdateRating(int id, [FromBody] Rating rating)
         {
             var ratin = await _ratingRepository.GetById(id);
@@ -61,6 +64,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> RemoveRating(int id)
         {
             var ratin = await _ratingRepository.GetById(id);

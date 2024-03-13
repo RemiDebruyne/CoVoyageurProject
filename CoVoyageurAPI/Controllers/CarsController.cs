@@ -1,8 +1,8 @@
-﻿using CoVoyageurCore.Models;
+﻿using CoVoyageurAPI.Helpers;
 using CoVoyageurAPI.Repositories;
+using CoVoyageurCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using CoVoyageurAPI.Helpers;
 
 namespace CoVoyageurAPI.Controllers
 {
@@ -22,7 +22,6 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> Menu()
         {
             return Ok(await _carRepository.GetAll());
@@ -47,6 +46,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> UpdateCar(int id, [FromBody] Car car)
         {
             var ca = await _carRepository.GetById(id);
@@ -61,6 +61,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> RemoveCar(int id)
         {
             var ca = await _carRepository.GetById(id);

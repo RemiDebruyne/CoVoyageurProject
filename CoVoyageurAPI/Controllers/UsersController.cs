@@ -1,12 +1,14 @@
-﻿using CoVoyageurCore.Models;
+﻿using CoVoyageurAPI.Helpers;
 using CoVoyageurAPI.Repositories;
+using CoVoyageurCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoVoyageurAPI.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    //[Authorize(Policy = Constants.PolicyAdmin)]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IRepository<User> _userRepository;
@@ -24,7 +26,6 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = Constants.RoleUser+","+Constants.RoleAdmin)]
         public async Task<IActionResult> Menu()
         {
             return Ok(await _userRepository.GetAll());
@@ -37,6 +38,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> AddUser([FromBody] User user)
         {
             var userId = await _userRepository.Add(user);
@@ -48,6 +50,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
         {
             var use = await _userRepository.GetById(id);
@@ -62,6 +65,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> RemoveUser(int id)
         {
             var use = await _userRepository.GetById(id);
