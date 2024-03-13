@@ -16,19 +16,17 @@ namespace CoVoyageurCore.Models
         [Column("review")]
         [Required]
         public string? Review { get; set; }
-
-        public int UserId { get; set; }
-        public User User { get; set; }
-
-        public List<Car>? Cars { get; set; }
-
-        public List<Preference>? Preferences { get; set; }
-
+   
         public enum Preference
         {
             Musique,
             Tabac,
             Animaux
         }
+
+        public User User { get; set; }
+        public int UserId { get; set; }
+        public List<Car>? Cars { get; set; }
+        public List<Preference>? Preferences { get; set; }
     }
 }

@@ -24,10 +24,9 @@ namespace CoVoyageurCore.Models
         [Column("userId")]
         [Required]
         public int UserId { get; set; }
-
-        public User User { get; set; }
-
+       
         [Column("color")]
+        [Required]
         public CarColor Color { get; set; }
 
         public enum CarColor
@@ -43,5 +42,6 @@ namespace CoVoyageurCore.Models
             Purple
         }
 
+        public User User { get; set; }
     }
 }

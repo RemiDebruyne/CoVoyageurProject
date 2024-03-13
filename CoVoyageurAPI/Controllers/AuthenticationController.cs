@@ -94,11 +94,8 @@ namespace CoVoyageurAPI.Controllers
             });
         }
 
-        // possible d'ajouter les actions de crud des users ici ou dans un controlleur UserController
-
         [NonAction]
         private string EncryptPassword(string? password)
-        // il serait plus adapté de mettre ce genre de méthode dans un service dédié au chiffrage
         {
             if (string.IsNullOrEmpty(password)) return "";
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(password + _securityKey));

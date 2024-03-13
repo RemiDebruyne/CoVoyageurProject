@@ -19,7 +19,7 @@ namespace CoVoyageurCore.Models
         [Required]
         [RegularExpression(@"^[A-Z\- ]*", ErrorMessage = "LastName must be in uppercase !")]
         public string? LastName { get; set; }
-        public string? FullName => FirstName + " " + LastName; // get => pas d'attribut/variable FullName
+        public string? FullName => FirstName + " " + LastName;
 
         [Column("email")]
         [Required(ErrorMessage = "Email adress is required")]
