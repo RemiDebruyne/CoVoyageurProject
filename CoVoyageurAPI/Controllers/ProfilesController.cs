@@ -1,12 +1,14 @@
-﻿using CoVoyageurCore.Models;
+﻿using CoVoyageurAPI.Helpers;
 using CoVoyageurAPI.Repositories;
+using CoVoyageurCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoVoyageurAPI.Controllers
 {
     [Route("api/profiles")]
     [ApiController]
-    //[Authorize(Policy = Constants.PolicyAdmin)]
+    [Authorize]
     public class ProfilesController : ControllerBase
     {
         private readonly IRepository<Profile> _profileRepository;
@@ -24,7 +26,6 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = Constants.RoleUser+","+Constants.RoleAdmin)]
         public async Task<IActionResult> Menu()
         {
             return Ok(await _profileRepository.GetAll());
@@ -37,6 +38,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> AddProfile([FromBody] Profile profile)
         {
             var profileId = await _profileRepository.Add(profile);
@@ -48,6 +50,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> UpdateProfile(int id, [FromBody] Profile profile)
         {
             var profil = await _profileRepository.GetById(id);
@@ -62,6 +65,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> RemoveProfile(int id)
         {
             var profil = await _profileRepository.GetById(id);
@@ -69,7 +73,7 @@ namespace CoVoyageurAPI.Controllers
                 return BadRequest("Profile not found");
 
             if (await _profileRepository.Delete(id))
-                return Ok("Profile Updated !");
+                return Ok("Profile Deleted !");
 
             return BadRequest("Something went wrong...");
         }

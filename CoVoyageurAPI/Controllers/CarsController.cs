@@ -1,12 +1,14 @@
-﻿using CoVoyageurCore.Models;
+﻿using CoVoyageurAPI.Helpers;
 using CoVoyageurAPI.Repositories;
+using CoVoyageurCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoVoyageurAPI.Controllers
 {
     [Route("api/cars")]
     [ApiController]
-    //[Authorize(Policy = Constants.PolicyAdmin)]
+    [Authorize]
     public class CarsController : ControllerBase
     {
         private readonly IRepository<Car> _carRepository;
@@ -20,7 +22,6 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = Constants.RoleUser+","+Constants.RoleAdmin)]
         public async Task<IActionResult> Menu()
         {
             return Ok(await _carRepository.GetAll());
@@ -33,6 +34,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> AddCar([FromBody] Car car)
         {
             var carId = await _carRepository.Add(car);
@@ -44,6 +46,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> UpdateCar(int id, [FromBody] Car car)
         {
             var ca = await _carRepository.GetById(id);
@@ -58,6 +61,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> RemoveCar(int id)
         {
             var ca = await _carRepository.GetById(id);
@@ -65,7 +69,7 @@ namespace CoVoyageurAPI.Controllers
                 return BadRequest("Car not found");
 
             if (await _carRepository.Delete(id))
-                return Ok("Car Updated !");
+                return Ok("Car Deleted !");
 
             return BadRequest("Something went wrong...");
         }

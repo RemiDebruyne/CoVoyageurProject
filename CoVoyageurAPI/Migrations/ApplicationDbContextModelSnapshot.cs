@@ -436,9 +436,9 @@ namespace CoVoyageurAPI.Migrations
                             Email = "kevin@mail.com",
                             FirstName = "Kevin",
                             Gender = "M",
-                            IsAdmin = false,
+                            IsAdmin = true,
                             LastName = "Callet",
-                            PassWord = "pswd",
+                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
                             Phone = "0102030405"
                         },
                         new
@@ -450,7 +450,7 @@ namespace CoVoyageurAPI.Migrations
                             Gender = "M",
                             IsAdmin = false,
                             LastName = "Mao",
-                            PassWord = "pswd",
+                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
                             Phone = "0102030405"
                         },
                         new
@@ -462,7 +462,7 @@ namespace CoVoyageurAPI.Migrations
                             Gender = "M",
                             IsAdmin = false,
                             LastName = "Debruyne",
-                            PassWord = "pswd",
+                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
                             Phone = "0102030405"
                         },
                         new
@@ -472,9 +472,9 @@ namespace CoVoyageurAPI.Migrations
                             Email = "aguit@mail.com",
                             FirstName = "Aguit",
                             Gender = "M",
-                            IsAdmin = false,
+                            IsAdmin = true,
                             LastName = "Inan",
-                            PassWord = "pswd",
+                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
                             Phone = "0102030405"
                         });
                 });
