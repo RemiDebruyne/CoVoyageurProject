@@ -73,7 +73,7 @@ namespace CoVoyageurAPI.Controllers
                 return BadRequest("User not found");
 
             if (await _userRepository.Delete(id))
-                return Ok("User Updated !");
+                return Ok("User Deleted !");
 
             return BadRequest("Something went wrong...");
         }

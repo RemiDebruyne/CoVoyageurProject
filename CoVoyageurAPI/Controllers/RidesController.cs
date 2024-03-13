@@ -73,7 +73,7 @@ namespace CoVoyageurAPI.Controllers
                 return BadRequest("Ride not found");
 
             if (await _rideRepository.Delete(id))
-                return Ok("Ride Updated !");
+                return Ok("Ride Deleted !");
 
             return BadRequest("Something went wrong...");
         }

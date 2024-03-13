@@ -73,7 +73,7 @@ namespace CoVoyageurAPI.Controllers
                 return BadRequest("Profile not found");
 
             if (await _profileRepository.Delete(id))
-                return Ok("Profile Updated !");
+                return Ok("Profile Deleted !");
 
             return BadRequest("Something went wrong...");
         }
