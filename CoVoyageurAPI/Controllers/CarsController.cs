@@ -69,7 +69,7 @@ namespace CoVoyageurAPI.Controllers
                 return BadRequest("Car not found");
 
             if (await _carRepository.Delete(id))
-                return Ok("Car Updated !");
+                return Ok("Car Deleted !");
 
             return BadRequest("Something went wrong...");
         }

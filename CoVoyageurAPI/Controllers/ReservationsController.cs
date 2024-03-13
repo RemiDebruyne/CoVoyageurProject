@@ -73,7 +73,7 @@ namespace CoVoyageurAPI.Controllers
                 return BadRequest("Reservation not found");
 
             if (await _reservationRepository.Delete(id))
-                return Ok("Reservation Updated !");
+                return Ok("Reservation Deleted !");
 
             return BadRequest("Something went wrong...");
         }

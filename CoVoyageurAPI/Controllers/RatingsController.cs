@@ -72,7 +72,7 @@ namespace CoVoyageurAPI.Controllers
                 return BadRequest("Rating not found");
 
             if (await _ratingRepository.Delete(id))
-                return Ok("Rating Updated !");
+                return Ok("Rating Deleted !");
 
             return BadRequest("Something went wrong...");
         }
