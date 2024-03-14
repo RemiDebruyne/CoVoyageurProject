@@ -1,6 +1,7 @@
 ﻿@page "/register"
 @layout NoMenuLayout
 @inject AuthenticationApiService service;
+@inject IApiQueryService<User> userService;
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject HttpClient client
 @using CoVoyageurCore.DTOs
@@ -102,8 +103,6 @@
 
         if ((int)success.StatusCode >= 200 && (int)success.StatusCode <= 299);
         {
-            ErrorMessage = "Register successfull";    
-
             var loginResponse = await service.Login(new LoginRequestDTO
                 {
                     Password = User.PassWord,
@@ -118,7 +117,7 @@
 
             if (loginResponse != null)
             {
-                localStorage.SetItemAsync("token", loginResponse.Token);
+                await localStorage.SetItemAsync("token", loginResponse.Token);
                 ErrorMessage = "";
                 Navigation.NavigateTo("/register/profile/");
             }
