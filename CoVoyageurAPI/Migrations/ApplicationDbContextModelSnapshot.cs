@@ -114,12 +114,10 @@ namespace CoVoyageurAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int?>("Rating")
-                        .IsRequired()
                         .HasColumnType("int")
                         .HasColumnName("rating");
 
                     b.Property<string>("Review")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("review");
 

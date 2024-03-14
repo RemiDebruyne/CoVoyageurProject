@@ -37,7 +37,7 @@ namespace CoVoyageurTestsXUnit
             var mockUserRepo = new Mock<IRepository<User>>();
             var newCar = new Car { LicensePlate = "ABC123", Model = "Civic", Brand = "Honda", UserId = 1 };
 
-            mockCarRepo.Setup(x => x.Add(It.IsAny<Car>())).ReturnsAsync(2); // Simule un ID de voiture généré
+            mockCarRepo.Setup(x => x.Add(It.IsAny<Car>())).ReturnsAsync(2);
 
             var controller = new CarsController(mockCarRepo.Object, mockUserRepo.Object);
 

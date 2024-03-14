@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoVoyageurAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240312112513_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240312131710_updateProfileModel")]
+    partial class updateProfileModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,12 +116,10 @@ namespace CoVoyageurAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int?>("Rating")
-                        .IsRequired()
                         .HasColumnType("int")
                         .HasColumnName("rating");
 
                     b.Property<string>("Review")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("review");
 
@@ -440,9 +438,9 @@ namespace CoVoyageurAPI.Migrations
                             Email = "kevin@mail.com",
                             FirstName = "Kevin",
                             Gender = "M",
-                            IsAdmin = true,
+                            IsAdmin = false,
                             LastName = "Callet",
-                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         },
                         new
@@ -454,7 +452,7 @@ namespace CoVoyageurAPI.Migrations
                             Gender = "M",
                             IsAdmin = false,
                             LastName = "Mao",
-                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         },
                         new
@@ -466,7 +464,7 @@ namespace CoVoyageurAPI.Migrations
                             Gender = "M",
                             IsAdmin = false,
                             LastName = "Debruyne",
-                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         },
                         new
@@ -476,9 +474,9 @@ namespace CoVoyageurAPI.Migrations
                             Email = "aguit@mail.com",
                             FirstName = "Aguit",
                             Gender = "M",
-                            IsAdmin = true,
+                            IsAdmin = false,
                             LastName = "Inan",
-                            PassWord = "cHN3ZGNsw6kgc3VwZXIgc2VjcsOodGU=",
+                            PassWord = "pswd",
                             Phone = "0102030405"
                         });
                 });

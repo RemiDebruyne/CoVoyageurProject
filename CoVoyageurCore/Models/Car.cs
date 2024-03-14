@@ -10,15 +10,14 @@ namespace CoVoyageurCore.Models
         public int Id { get; set; }
 
         [Column("license_plate")]
-        [Required]
         public string? LicensePlate { get; set; }
 
         [Column("model")]
-        [Required]
+        [Required(ErrorMessage = "The model is required")]
         public string? Model { get; set; }
 
         [Column("brand")]
-        [Required]
+        [Required(ErrorMessage = "The brand is required")]
         public string? Brand { get; set; }
 
         [Column("userId")]
@@ -26,7 +25,7 @@ namespace CoVoyageurCore.Models
         public int UserId { get; set; }
        
         [Column("color")]
-        [Required]
+        [Required(ErrorMessage = "The color is required")]
         public CarColor Color { get; set; }
 
         public enum CarColor
