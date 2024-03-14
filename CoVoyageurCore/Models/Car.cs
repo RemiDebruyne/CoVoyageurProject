@@ -44,5 +44,6 @@ namespace CoVoyageurCore.Models
             Purple
         }
 
+        public User User { get; set; }
     }
 }

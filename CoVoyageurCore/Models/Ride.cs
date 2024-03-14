@@ -30,6 +30,7 @@ namespace CoVoyageurCore.Models
         public string Arrival { get; set; }
 
         public User User { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
+       // public ICollection<Rating> Ratings { get; set; }
+        public List<Rating> Ratings { get; set; }
     }
 }

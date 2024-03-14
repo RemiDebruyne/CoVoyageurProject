@@ -22,14 +22,14 @@ namespace CoVoyageurCore.Models
 
         [Column("status")]
         public ReservationStatus Status { get; set; }
-
-        public User User { get; set; }
-
+      
         public enum ReservationStatus
         {
             Confirmed,
             Cancelled,
             Waiting
         }
+
+        public User User { get; set; }
     }
 }

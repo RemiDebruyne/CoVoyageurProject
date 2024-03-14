@@ -28,5 +28,10 @@ namespace CoVoyageurCore.Models
             Tabac,
             Animaux
         }
+
+        public User User { get; set; }
+        public int UserId { get; set; }
+        public List<Car>? Cars { get; set; }
+        public List<Preference>? Preferences { get; set; }
     }
 }

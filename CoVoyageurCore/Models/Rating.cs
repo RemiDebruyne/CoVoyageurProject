@@ -29,6 +29,5 @@ namespace CoVoyageurCore.Models
         public User RatingUser { get; set; }
         public User RatedUser { get; set; }
         public Ride Ride { get; set; }
-
     }
 }
