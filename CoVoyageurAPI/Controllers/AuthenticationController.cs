@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using CoVoyageurCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using LoginRequestDTO = CoVoyageurCore.DTOs.LoginRequestDTO;
 
 
 namespace CoVoyageurAPI.Controllers
@@ -28,7 +29,7 @@ namespace CoVoyageurAPI.Controllers
             _settings = appSettings.Value;
         }
 
-        [HttpPost("[action]")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] User user)
         {
             if (await _userRepository.Get(u => u.Email == user.Email) != null)
@@ -54,11 +55,11 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDTO login)
+        public async Task<IActionResult> Login([FromBody] CoVoyageurCore.DTOs.LoginRequestDTO login)
         {
-            login.PassWord = EncryptPassword(login.PassWord);
+            login.Password = EncryptPassword(login.Password);
 
-            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.PassWord);
+            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.Password);
 
             if (user == null)
                 return BadRequest("Invalid Authentication !");
@@ -70,7 +71,7 @@ namespace CoVoyageurAPI.Controllers
 
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Role, role),
+                new Claim(ClaimTypes.Role, Constants.RoleAdmin),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
 
@@ -145,7 +146,7 @@ namespace CoVoyageurAPI.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = Constants.RoleUser)]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> autoLogin(/*[FromHeader] string token*/)
         {
             //var handler = new JwtSecurityTokenHandler();
