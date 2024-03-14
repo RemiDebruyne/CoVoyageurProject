@@ -1,4 +1,5 @@
-﻿using CoVoyageurAPI.Helpers;
+using CoVoyageurAPI.DTOs;
+using CoVoyageurAPI.Helpers;
 using CoVoyageurCore.Models;
 using CoVoyageurAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using CoVoyageurCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
+
 
 namespace CoVoyageurAPI.Controllers
 {
@@ -26,7 +28,7 @@ namespace CoVoyageurAPI.Controllers
             _settings = appSettings.Value;
         }
 
-        [HttpPost("register")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Register([FromBody] User user)
         {
             if (await _userRepository.Get(u => u.Email == user.Email) != null)
@@ -54,16 +56,18 @@ namespace CoVoyageurAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO login)
         {
-            login.Password = EncryptPassword(login.Password);
+            login.PassWord = EncryptPassword(login.PassWord);
 
-            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.Password);
+            var user = await _userRepository.Get(u => u.Email == login.Email && u.PassWord == login.PassWord);
 
             if (user == null)
                 return BadRequest("Invalid Authentication !");
 
+
             var role = user.IsAdmin ? "Admin" : "User";
 
             //JWT
+
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Role, role),
@@ -104,12 +108,16 @@ namespace CoVoyageurAPI.Controllers
 
             var role = user.IsAdmin ? "Admin" : "User";
 
-            //JWT
-            List<Claim> claims = new List<Claim>()
+            string roleClaimValue = role == "Admin" ? Constants.RoleAdmin : Constants.RoleUser;
+
+
+            // Initialisation de la liste des claims avec les valeurs déterminées
+            List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, Constants.RoleAdmin),
+                new Claim(ClaimTypes.Role, roleClaimValue),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
+
 
             SigningCredentials signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_settings.SecretKey!)),
@@ -125,7 +133,7 @@ namespace CoVoyageurAPI.Controllers
 
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return Ok(new LoginResponseDTO
+            return Ok(new
             {
                 Token = token,
                 Message = "Valid Authentication !",
@@ -134,6 +142,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         // possible d'ajouter les actions de crud des users ici ou dans un controlleur UserController
+
 
         [HttpGet]
         [Authorize(Roles = Constants.RoleUser)]
@@ -152,6 +161,7 @@ namespace CoVoyageurAPI.Controllers
             return Ok(user);
         }
 
+
         [NonAction]
         private string EncryptPassword(string? password)
         // il serait plus adapté de mettre ce genre de méthode dans un service dédié au chiffrage
@@ -159,6 +169,5 @@ namespace CoVoyageurAPI.Controllers
             if (string.IsNullOrEmpty(password)) return "";
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(password + _securityKey));
         }
-
     }
 }

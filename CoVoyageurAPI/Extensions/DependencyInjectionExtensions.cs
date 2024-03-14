@@ -15,19 +15,14 @@ namespace CoVoyageurAPI.Extensions
     public static class DependencyInjectionExtensions
     {
         public static void InjectDependancies(this WebApplicationBuilder builder)
-        {
-            // ajouter .AddJsonOptions(...) pour éviter les cycles/la redondance (un ingrédient qui a sa pizza dans le json qui a elle même son ingrédient
+        {           
             builder.Services.AddControllers().AddJsonOptions(x =>
                             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             builder.AddSwagger();
-
             builder.AddDatabase();
-
             builder.AddRepositories();
-
             builder.AddAuthentication();
-
             builder.AddAuthorization();
         }
 
@@ -37,7 +32,7 @@ namespace CoVoyageurAPI.Extensions
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoVoyageurAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoVoyageurApi", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,

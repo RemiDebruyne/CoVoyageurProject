@@ -24,10 +24,6 @@
 	  <ProjectReference Include="..\CoVoyageurCore\CoVoyageurCore.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Migrations\" />
-	</ItemGroup>
-
 
 
 </Project>

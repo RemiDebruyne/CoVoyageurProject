@@ -1,12 +1,14 @@
-﻿using CoVoyageurCore.Models;
+﻿using CoVoyageurAPI.Helpers;
 using CoVoyageurAPI.Repositories;
+using CoVoyageurCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoVoyageurAPI.Controllers
 {
     [Route("api/rides")]
     [ApiController]
-    //[Authorize(Policy = Constants.PolicyAdmin)]
+    [Authorize]
     public class RidesController : ControllerBase
     {
         private readonly IRepository<Ride> _rideRepository;
@@ -24,7 +26,6 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = Constants.RoleUser+","+Constants.RoleAdmin)]
         public async Task<IActionResult> Menu()
         {
             return Ok(await _rideRepository.GetAll());
@@ -37,6 +38,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> AddRide([FromBody] Ride ride)
         {
             var rideId = await _rideRepository.Add(ride);
@@ -48,6 +50,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> UpdateRide(int id, [FromBody] Ride ride)
         {
             var rid = await _rideRepository.GetById(id);
@@ -62,6 +65,7 @@ namespace CoVoyageurAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Constants.RoleAdmin)]
         public async Task<IActionResult> RemoveRide(int id)
         {
             var rid = await _rideRepository.GetById(id);
@@ -69,7 +73,7 @@ namespace CoVoyageurAPI.Controllers
                 return BadRequest("Ride not found");
 
             if (await _rideRepository.Delete(id))
-                return Ok("Ride Updated !");
+                return Ok("Ride Deleted !");
 
             return BadRequest("Something went wrong...");
         }
